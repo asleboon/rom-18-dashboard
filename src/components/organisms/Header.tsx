@@ -22,8 +22,8 @@ const Header: React.FC = () => {
   const headerProps = useSpring({ opacity: 1, from: { opacity: 0 } })
   return (
     <HeaderContainer style={headerProps}>
-      <Link to="/">hei</Link>
-      <Link to="/" >hei</Link>
+      <Link to="/">Bilde</Link>
+      <Link to="/kollektiv">Kollektiv</Link>
       <Link to="/" >hei</Link>
     </HeaderContainer>
   )
