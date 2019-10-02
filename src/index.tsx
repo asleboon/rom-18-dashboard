@@ -1,24 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import styled from 'styled-components'
+import Layout from './components/organisms/Layout'
+import Animal from './components/organisms/Animal'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Header from './components/organisms/Header'
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div >
+    <Layout>
+      <Router>
+        <Header />
+        <Switch>
+          <Route exact path="/" component={Animal} />
+          {/* <Route exact path="/kollektiv" component={} /> */}
+          {/* <Route exact path="/kantine" component={} /> */}
+        </Switch>
+      </Router>
+    </Layout>
   );
 }
 
