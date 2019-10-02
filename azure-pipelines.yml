@@ -20,8 +20,12 @@ steps:
 
 - task: Npm@1
   inputs:
+    command: 'install'
+
+- task: Npm@1
+  inputs:
     command: 'custom'
-    customCommand: 'npm run build'
+    customCommand: 'run build'
 
 - task: AzureRmWebAppDeployment@4
   inputs:
