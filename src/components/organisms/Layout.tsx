@@ -26,7 +26,11 @@ interface Props {
 }
 
 const Layout: React.FC<Props> = ({ children }) => {
-  return <LayoutContainer>{children}</LayoutContainer>;
+  return (
+    <LayoutContainer>
+      {children}
+    </LayoutContainer>
+  )
 };
 
 export default Layout;
