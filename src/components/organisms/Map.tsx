@@ -4,23 +4,24 @@ import styled from 'styled-components';
 import { useSpring, animated } from 'react-spring';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import moment from 'moment';
+import { MapStyles } from '../atoms/MapStyle';
 //const AnyReactComponent = ({ text }) => <div>{text}</div>;
 const MapDiv = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 20px;
 `;
 const MapCenter = styled.div`
-  height: 60%;
-  width: 60%;
+  height: 70%;
+  width: 70%;
   display: flex;
   justify-content: center;
 `;
 const MapElement = styled(GoogleMapReact)`
-  height: 50%;
-  width: 50%;
+  height: 60%;
+  width: 60%;
 `;
 const Donut = styled.div`
   height: 25px;
@@ -34,6 +35,7 @@ const Circle = styled.div`
   top: 20px;
   right: 20px;
 `;
+
 const AnimatedDonut = animated(CircularProgress);
 const Map: React.FC = () => {
   const [deaultCenter, setDefaultCenter] = useState({ lat: 58.917064, lng: 5.718236 });
@@ -80,6 +82,9 @@ const Map: React.FC = () => {
     return (
       <MapCenter>
         <MapElement
+          options={{
+            styles: MapStyles
+          }}
           layerTypes={['TrafficLayer']}
           bootstrapURLKeys={{ key: 'AIzaSyBy3SCwdFsIntFwoi-uMjPaPMCtYeRWnFQ' }}
           defaultCenter={deaultCenter}
