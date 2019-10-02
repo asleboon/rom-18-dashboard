@@ -105,7 +105,6 @@ const Transport: React.FC<ITransport> = ({
           )
         }
         )}
-      }
     </TransportContainer>
   )
 }

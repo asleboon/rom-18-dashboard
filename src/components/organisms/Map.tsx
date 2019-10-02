@@ -7,8 +7,8 @@ import moment from 'moment';
 import { MapStyles } from '../atoms/MapStyle';
 //const AnyReactComponent = ({ text }) => <div>{text}</div>;
 const MapDiv = styled.div`
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  max-width: 100vw;
   display: flex;
   justify-content: center;
   margin-top: 20px;
