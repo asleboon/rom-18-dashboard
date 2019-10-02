@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import styled from 'styled-components'
-import Layout from './components/organisms/Layout'
-import Animal from './components/organisms/Animal'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import Header from './components/organisms/Header'
+import styled from 'styled-components';
+import Layout from './components/organisms/Layout';
+import Animal from './components/organisms/Map';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Header from './components/organisms/Header';
 
 const App: React.FC = () => {
   return (
@@ -20,6 +20,6 @@ const App: React.FC = () => {
       </Router>
     </Layout>
   );
-}
+};
 
 ReactDOM.render(<App />, document.getElementById('root'));
