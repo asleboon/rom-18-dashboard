@@ -6,10 +6,7 @@ export interface IStopPlace {
 
 export interface IEstimatedCall {
 	aimedArrivalTime: string;
-	aimedDepartureTime: string;
 	expectedArrivalTime: string;
-	expectedDepartureTime: string;
-	date: string;
 	destinationDisplay: IDestinationDisplay;
 	serviceJourney: IServiceJourney;
 }

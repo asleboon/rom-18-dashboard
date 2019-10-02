@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const LayoutContainer = styled.div`
-  width: 100vw;
+  max-width: 100vw;
   min-height: 100vh;
   background-image: radial-gradient(
     circle,
@@ -26,7 +26,11 @@ interface Props {
 }
 
 const Layout: React.FC<Props> = ({ children }) => {
-  return <LayoutContainer>{children}</LayoutContainer>;
+  return (
+    <LayoutContainer>
+      {children}
+    </LayoutContainer>
+  )
 };
 
 export default Layout;

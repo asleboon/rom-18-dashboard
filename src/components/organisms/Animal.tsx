@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { History } from 'history';
 import { animated, useSpring } from 'react-spring';
 import { PIXABAY_BASE_URL } from './../../api'
 
@@ -18,16 +19,27 @@ const Image = styled(animated.img)`
   /* border: 5px solid white; */
 `
 
-const Animal: React.FC = () => {
+interface IPageProps {
+  history: History
+}
+
+const Animal: React.FC<IPageProps> = ({
+  history,
+}) => {
   const [image, setImage] = React.useState();
   const imageProps = useSpring({ opacity: 1, from: { opacity: 0 }, config: { duration: 3000 } })
+
   React.useEffect(() => {
     fetchImage();
+    // setInterval(() => {
+    //   history.push('/kollektiv')
+    // }, 10500)
   }, [])
 
   const fetchImage = async () => {
     let res = await axios.get(`${PIXABAY_BASE_URL}?key=13807530-1be241224f9cb9953219d6a4d&q=animal`);
-    setImage(res.data.hits[0].largeImageURL)
+    let idx = Math.round((Math.random() * 19))
+    setImage(res.data.hits[idx].largeImageURL)
   }
 
   return (

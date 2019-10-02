@@ -1,14 +1,12 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
-import moment from 'moment';
 import { STOP_PLACE_QUERY } from './../../graphql/query';
 import styled from 'styled-components';
-import { IoIosBus, IoIosTrain } from 'react-icons/io'
 import { IStopPlace, IEstimatedCall } from './../../types/Transport'
+import TransportRow from './TransportRow'
 
 
-const TransportContainer = styled.div`
+const TransportTable = styled.div`
   display: flex;
   width: 60vw;
   flex-direction: column;
@@ -16,54 +14,41 @@ const TransportContainer = styled.div`
 
 const TransportTitle = styled.h3`
   color: white;
-  font-size: 26px;
+  font-size: 35px;
   text-shadow: 2px 3px 0px #898999;
   text-align: center;
 `
 
-const DepartureContainer = styled.div`
+const TransportTableHeader = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-around;
   align-items: center;
-  color: white;
+  height: 88px;
+  margin: 1px;
+  background-color: rgba(255,255,255, 0.7);
 `
 
-const TrainIcon = styled(IoIosTrain)`
-  width: 30px;
-  height: 30px;
-  padding: 0 5px;
+const HeaderText = styled.div`
+  display: flex;
+  width: 150px;
+  font-size: 18px;
+  color: black;
+  text-shadow: 1px 1.5px 0px #898999;
 `
 
-const BusIcon = styled(IoIosBus)`
-  width: 30px;
-  height: 30px;
-  padding: 0 5px;
-`
-
-const DepatureDestination = styled.div`
-
-`
-
-const DepartureInfo = styled.p`
-  color: white;
-  font-size: 16px;
-  padding: 10px;
-`
-
+export interface IDeparture extends IEstimatedCall {
+  departurePlace: string;
+}
 
 interface ITransport {
   stopIds: string[];
 }
 
-interface IDeparture extends IEstimatedCall {
-  departurePlace: string;
-}
-
 const Transport: React.FC<ITransport> = ({
-  stopIds
+  stopIds,
 }) => {
   const { loading, error, data } = useQuery(STOP_PLACE_QUERY, {
-    variables: { stopIds, n: 5 }
+    variables: { stopIds, n: 2 }
   });
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -89,24 +74,31 @@ const Transport: React.FC<ITransport> = ({
   let departures: IDeparture[] = sortDataByDate(data.stopPlaces)
 
   return (
-    <TransportContainer>
+    <TransportTable>
       <TransportTitle>Avgangstider</TransportTitle>
+      <TransportTableHeader>
+        <HeaderText>Planlagt Avgang</HeaderText>
+        <HeaderText>Forventet Avgang</HeaderText>
+        <HeaderText>Fra</HeaderText>
+        <HeaderText>Til</HeaderText>
+        <HeaderText>Type</HeaderText>
+      </TransportTableHeader>
       {departures.length > 0 &&
         departures.map((departure: IDeparture, idx: number) => {
-          let moreInfo = departure.serviceJourney.journeyPattern.line
+          // let transportMode = departure.serviceJourney.journeyPattern.line.transportMode;
           return (
-            <DepartureContainer key={idx + departure.aimedArrivalTime}>
-              <DepartureInfo>{moment(departure.aimedArrivalTime).format('HH:mm')}</DepartureInfo>
-              <DepartureInfo>{moment(departure.expectedArrivalTime).format('HH:mm')}</DepartureInfo>
-              <DepartureInfo>Avgang: {departure.departurePlace}</DepartureInfo>
-              <DepartureInfo>Destination: {departure.destinationDisplay.frontText}</DepartureInfo>
-              {moreInfo.transportMode === 'bus' ? <BusIcon /> : <TrainIcon />}
-            </DepartureContainer>
+            <TransportRow
+              key={idx + departure.aimedArrivalTime}
+              departurePlace={departure.departurePlace}
+              aimedArrivalTime={departure.aimedArrivalTime}
+              expectedArrivalTime={departure.expectedArrivalTime}
+              destinationDisplay={departure.destinationDisplay}
+              serviceJourney={departure.serviceJourney}
+            />
           )
         }
         )}
-      }
-    </TransportContainer>
+    </TransportTable>
   )
 }
 
