@@ -34,4 +34,3 @@ steps:
     appType: 'webAppLinux'
     WebAppName: 'dashboard18'
     packageForLinux: '$(System.DefaultWorkingDirectory)/build'
-    RuntimeStack: 'NODE|12-lts'
