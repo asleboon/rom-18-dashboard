@@ -5,6 +5,7 @@ import moment from 'moment';
 import { STOP_PLACE_QUERY } from './../../graphql/query';
 import styled from 'styled-components';
 import { IoIosBus, IoIosTrain } from 'react-icons/io'
+import { IStopPlace, IEstimatedCall } from './../../types/Transport'
 
 
 const TransportContainer = styled.div`
@@ -50,10 +51,12 @@ const DepartureInfo = styled.p`
 `
 
 
-
-
 interface ITransport {
   stopIds: string[];
+}
+
+interface IDeparture extends IEstimatedCall {
+  departurePlace: string;
 }
 
 const Transport: React.FC<ITransport> = ({
@@ -65,31 +68,31 @@ const Transport: React.FC<ITransport> = ({
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-  const sortDataByDate = (data: any) => {
+  const sortDataByDate = (stopPlaces: IStopPlace[]) => {
     // concat all lists
     // TODO: types
-    let allDepartures: any[] = [];
-    data.forEach((stops: any) => {
-      stops.estimatedCalls.forEach((call: any) => {
+    let allDepartures: IDeparture[] = [];
+    stopPlaces.forEach((stops: IStopPlace) => {
+      stops.estimatedCalls.forEach((call: IEstimatedCall) => {
+        // add departure place on each departure
         allDepartures.push({ ...call, departurePlace: stops.name })
       })
     })
 
     // sort each item by date
-    allDepartures.sort(function (a: any, b: any) {
+    allDepartures.sort(function (a: IDeparture, b: IDeparture) {
       return new Date(a.aimedArrivalTime).getTime() - new Date(b.aimedArrivalTime).getTime()
     });
-    console.log(allDepartures)
     return allDepartures
   }
 
-  let departures = sortDataByDate(data.stopPlaces)
+  let departures: IDeparture[] = sortDataByDate(data.stopPlaces)
 
   return (
     <TransportContainer>
       <TransportTitle>Avgangstider</TransportTitle>
       {departures.length > 0 &&
-        departures.map((departure: any, idx: number) => {
+        departures.map((departure: IDeparture, idx: number) => {
           let moreInfo = departure.serviceJourney.journeyPattern.line
           return (
             <DepartureContainer key={idx + departure.aimedArrivalTime}>
