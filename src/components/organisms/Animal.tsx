@@ -27,7 +27,10 @@ const Animal: React.FC = () => {
 
   const fetchImage = async () => {
     let res = await axios.get(`${PIXABAY_BASE_URL}?key=13807530-1be241224f9cb9953219d6a4d&q=animal`);
-    setImage(res.data.hits[0].largeImageURL)
+    console.log(res.data)
+    console.log(Math.round((Math.random() * 500)))
+    let idx = Math.round((Math.random() * 19))
+    setImage(res.data.hits[idx].largeImageURL)
   }
 
   return (
