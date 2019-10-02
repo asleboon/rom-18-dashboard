@@ -1,6 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
-
+import React from 'react';
+import styled from 'styled-components';
 
 const LayoutContainer = styled.div`
   width: 100vw;
@@ -26,14 +25,8 @@ interface Props {
   children: JSX.Element[] | JSX.Element;
 }
 
-const Layout: React.FC<Props> = ({
-  children
-}) => {
-  return (
-    <LayoutContainer>
-      {children}
-    </LayoutContainer>
-  )
-}
+const Layout: React.FC<Props> = ({ children }) => {
+  return <LayoutContainer>{children}</LayoutContainer>;
+};
 
-export default Layout
+export default Layout;
