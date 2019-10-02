@@ -2,9 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { animated, useSpring } from 'react-spring';
-// environment variables
-import now from './../../now.json'
-import { PIXABAY_BASE_URL } from '../../api'
+import { PIXABAY_BASE_URL } from './../../api'
 
 const ImageContainer = styled.div`
   max-height: 100%;
@@ -28,7 +26,7 @@ const Animal: React.FC = () => {
   }, [])
 
   const fetchImage = async () => {
-    let res = await axios.get(`${PIXABAY_BASE_URL}?key=${now.build.env.PIXABAY_API_KEY}&q=animal`);
+    let res = await axios.get(`${PIXABAY_BASE_URL}?key=13807530-1be241224f9cb9953219d6a4d&q=animal`);
     setImage(res.data.hits[0].largeImageURL)
   }
 
