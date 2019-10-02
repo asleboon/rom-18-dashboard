@@ -7,6 +7,7 @@ import { client } from './graphql/client';
 import Header from './components/organisms/Header';
 import Layout from './components/organisms/Layout';
 import Animal from './components/organisms/Animal';
+import Map from './components/organisms/Map';
 import PublicTransport from './components/organisms/PublicTransport';
 import './index.css';
 
@@ -19,6 +20,7 @@ const App: React.FC = () => {
           <Switch>
             <Route exact path="/" component={Animal} />
             <Route exact path="/kollektiv" component={PublicTransport} />
+            <Route exact path="/Map" component={Map} />
             {/* <Route exact path="/kantine" component={} /> */}
           </Switch>
         </Router>
