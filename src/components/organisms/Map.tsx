@@ -6,10 +6,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import moment from 'moment';
 import { MapStyles } from '../atoms/MapStyle';
 import { History } from 'history';
-import { IPage } from '../../types/Page'
+import { IPage } from '../../types/Page';
 import { useHistory } from 'react-router';
 
-//const AnyReactComponent = ({ text }) => <div>{text}</div>;
 const MapDiv = styled.div`
   height: 80vh;
   max-width: 100vw;
@@ -26,14 +25,10 @@ const MapCenter = styled.div`
 const MapElement = styled(GoogleMapReact)`
   height: 60%;
   width: 60%;
+  box-shadow: 10px 10px black;
 `;
 
-
-const Map: React.FC<IPage> = ({
-  changePage,
-  seconds,
-  pageNumber
-}) => {
+const Map: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
   const [deaultCenter, setDefaultCenter] = useState({ lat: 58.917064, lng: 5.718236 });
   const [zoom, setZoom] = useState(15);
   const [loadMap, setLoadMap] = useState(true);
@@ -43,9 +38,9 @@ const Map: React.FC<IPage> = ({
   let history = useHistory();
   React.useEffect(() => {
     if (seconds === 100) {
-      changePage(history, '/kart')
+      changePage(history, '/kart');
     }
-  }, [seconds])
+  }, [seconds]);
 
   // useEffect(() => {
   //   checkTime();
@@ -89,14 +84,14 @@ const Map: React.FC<IPage> = ({
   //   setIsActive(!isActive);
   // }
 
-
-
   const renderMap = () => {
     return (
       <MapCenter>
         <MapElement
           options={{
-            styles: MapStyles
+            styles: MapStyles,
+            disableDefaultUI: true,
+            backgroundColor: 'orange'
           }}
           layerTypes={['TrafficLayer']}
           bootstrapURLKeys={{ key: 'AIzaSyBy3SCwdFsIntFwoi-uMjPaPMCtYeRWnFQ' }}
@@ -109,9 +104,7 @@ const Map: React.FC<IPage> = ({
   return (
     // Important! Always set the container height explicitly
 
-    <MapDiv>
-      {loadMap && renderMap()}
-    </MapDiv>
+    <MapDiv>{loadMap && renderMap()}</MapDiv>
   );
 };
 
