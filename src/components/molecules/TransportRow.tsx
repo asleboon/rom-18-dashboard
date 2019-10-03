@@ -9,7 +9,7 @@ const Container = styled.div`
   grid-template-columns: 1fr 2fr 5fr 2fr;
   justify-items: space-around;
   align-items: center;
-  height: 90px;
+  height: 60px;
   margin: 1px;
   padding-left: 25px;
   background-color: rgba(255,255,255, 0.8);

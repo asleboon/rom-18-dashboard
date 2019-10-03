@@ -48,7 +48,7 @@ const Transport: React.FC<ITransport> = ({
   stopIds,
 }) => {
   const { loading, error, data } = useQuery(STOP_PLACE_QUERY, {
-    variables: { stopIds, n: 2 }
+    variables: { stopIds, n: 3 }
   });
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -75,14 +75,6 @@ const Transport: React.FC<ITransport> = ({
 
   return (
     <TransportTable>
-      {/* <TransportTitle>Avgangstider</TransportTitle> */}
-      {/* <TransportTableHeader>
-        <HeaderText>Planlagt Avgang</HeaderText>
-        <HeaderText>Forventet Avgang</HeaderText>
-        <HeaderText>Fra</HeaderText>
-        <HeaderText>Til</HeaderText>
-        <HeaderText>Type</HeaderText>
-      </TransportTableHeader> */}
       {departures.length > 0 &&
         departures.map((departure: IDeparture, idx: number) => {
           // let transportMode = departure.serviceJourney.journeyPattern.line.transportMode;

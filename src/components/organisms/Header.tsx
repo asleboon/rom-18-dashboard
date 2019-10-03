@@ -4,6 +4,11 @@ import { animated, useSpring } from 'react-spring';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment'
 
+
+interface LinkTextProps {
+  isActive: boolean;
+}
+
 const HeaderContainer = styled(animated.div)`
   height: 75px;
   display: flex;
@@ -20,18 +25,23 @@ const Link = styled(NavLink)`
   color: white;
 `;
 
-interface LinkTextProps {
-  isActive: boolean;
-}
-
 const LinkText = styled.p`
   color: white;
   font-size: 20px;
   text-decoration: none;
   padding: 0 10px;
   color: white;
-  border-bottom: ${(p: LinkTextProps) => p.isActive ? '1px solid white' : 'none'}
+  position: relative;
 `;
+
+const BorderBottom = styled.div`
+  width: 50px;
+  border-bottom: ${(p: LinkTextProps) => p.isActive ? '2px solid white' : 'none'}
+  position: absolute;
+  bottom: -10px;
+  transform: translate(-50%,0);
+  left: 50%;
+`
 
 const Header: React.FC = () => {
   let currentLocation = window.location.pathname;
@@ -46,9 +56,18 @@ const Header: React.FC = () => {
 
   return (
     <HeaderContainer style={headerProps}>
-      <LinkText isActive={decideIfActive('/')}><Link to="/">Bilde</Link></LinkText>
-      <LinkText isActive={decideIfActive('/kollektiv')}><Link to="/kollektiv">Kollektiv</Link></LinkText>
-      <LinkText isActive={decideIfActive('/kart')}><Link to="/kart">Kart</Link></LinkText>
+      <LinkText>
+        <Link to="/">Bilde</Link>
+        <BorderBottom isActive={decideIfActive('/')} />
+      </LinkText>
+      <LinkText>
+        <Link to="/kollektiv">Kollektiv</Link>
+        <BorderBottom isActive={decideIfActive('/kollektiv')} />
+      </LinkText>
+      <LinkText>
+        <Link to="/kart">Kart</Link>
+        <BorderBottom isActive={decideIfActive('/kart')} />
+      </LinkText>
     </HeaderContainer>
   );
 };
