@@ -16,8 +16,8 @@ const ImageContainer = styled.div`
 `
 
 const Image = styled(animated.img)`
-  width: 100vw;
-  width: 100vh;
+  height: 80vh;
+  width: 70vw;
   /* border: 5px solid white; */
 `
 
