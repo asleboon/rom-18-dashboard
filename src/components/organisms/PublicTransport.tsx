@@ -11,8 +11,7 @@ const PublicTransportContainer = styled.div`
   width: 100%;
 `
 
-// https://www.kolumbus.no/ruter/kart/sanntidskart/?c=58.916590,5.725658,15&lf=all&vt=bus,ferry
-const RealTimeMap = styled.iframe`
+const RealTimeMap = styled.embed`
   background-color: grey;
   width: 700px;
   height: 650px;

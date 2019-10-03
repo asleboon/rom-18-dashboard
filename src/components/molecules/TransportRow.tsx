@@ -6,7 +6,7 @@ import { IoIosBus, IoIosTrain } from 'react-icons/io'
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 2fr 5fr 2fr;
+  grid-template-columns: 1fr 2fr 5fr 2fr;
   justify-items: space-around;
   align-items: center;
   height: 90px;
@@ -33,12 +33,24 @@ const BusIcon = styled(IoIosBus)`
   padding-left: 50%;
 `
 
+const Route = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: black;
+  color: white;
+`
+
 const TransportRow: React.FC<IDeparture> = ({
   serviceJourney,
   departurePlace,
   aimedArrivalTime,
   expectedArrivalTime,
   destinationDisplay,
+  quay,
 }) => {
   const [nextDeparture, setNextDeparture] = useState()
   useEffect(() => {
@@ -55,14 +67,13 @@ const TransportRow: React.FC<IDeparture> = ({
     }
     return `${untilArrivalString} minutt`
   }
-
+  const transportMode = serviceJourney.journeyPattern.line.transportMode
   return (
     <Container>
-      {/* <Text>{moment(aimedArrivalTime).format('HH:mm')}</Text> */}
+      <Route><p>{transportMode === 'bus' ? serviceJourney.journeyPattern.line.name : quay.publicCode}</p></Route>
       <Text>{nextDeparture}</Text>
-      {/* <Text>{departurePlace}</Text> */}
       <Text>{destinationDisplay.frontText}</Text>
-      <Text>{serviceJourney.journeyPattern.line.transportMode === 'bus' ? <BusIcon /> : <TrainIcon />}</Text>
+      <Text>{transportMode === 'bus' ? <BusIcon /> : <TrainIcon />}</Text>
     </Container>
   )
 }

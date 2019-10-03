@@ -9,6 +9,12 @@ export interface IEstimatedCall {
 	expectedArrivalTime: string;
 	destinationDisplay: IDestinationDisplay;
 	serviceJourney: IServiceJourney;
+	quay: Quay;
+}
+
+export interface Quay {
+	name: string;
+	publicCode: string;
 }
 
 export interface IDestinationDisplay {

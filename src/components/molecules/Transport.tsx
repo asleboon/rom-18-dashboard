@@ -94,6 +94,7 @@ const Transport: React.FC<ITransport> = ({
               expectedArrivalTime={departure.expectedArrivalTime}
               destinationDisplay={departure.destinationDisplay}
               serviceJourney={departure.serviceJourney}
+              quay={departure.quay}
             />
           )
         }
