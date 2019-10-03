@@ -31,11 +31,11 @@ const PublicTransport: React.FC<IPage> = ({
   pageNumber
 }) => {
   let history = useHistory();
-  // React.useEffect(() => {
-  //   if (seconds === 100) {
-  //     changePage(history, '/kollektiv')
-  //   }
-  // }, [seconds])
+  React.useEffect(() => {
+    if (seconds === 100) {
+      changePage(history, '/kollektiv')
+    }
+  }, [seconds])
   return (
     <PublicTransportContainer>
       <Transport stopIds={['NSR:StopPlace:27172', 'NSR:StopPlace:362', 'NSR:StopPlace:26919']} />
