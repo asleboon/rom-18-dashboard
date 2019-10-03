@@ -7,7 +7,6 @@ import moment from 'moment';
 import { MapStyles } from '../atoms/MapStyle';
 import { History } from 'history';
 
-//const AnyReactComponent = ({ text }) => <div>{text}</div>;
 const MapDiv = styled.div`
   height: 80vh;
   max-width: 100vw;
@@ -24,15 +23,14 @@ const MapCenter = styled.div`
 const MapElement = styled(GoogleMapReact)`
   height: 60%;
   width: 60%;
+  box-shadow: 10px 10px black;
 `;
 
 interface IMap {
-  history: History,
+  history: History;
 }
 
-const Map: React.FC<IMap> = ({
-  history
-}) => {
+const Map: React.FC<IMap> = ({ history }) => {
   const [deaultCenter, setDefaultCenter] = useState({ lat: 58.917064, lng: 5.718236 });
   const [zoom, setZoom] = useState(15);
   const [loadMap, setLoadMap] = useState(false);
@@ -79,16 +77,16 @@ const Map: React.FC<IMap> = ({
 
   const toggle = () => {
     setIsActive(!isActive);
-  }
-
-
+  };
 
   const renderMap = () => {
     return (
       <MapCenter>
         <MapElement
           options={{
-            styles: MapStyles
+            styles: MapStyles,
+            disableDefaultUI: true,
+            backgroundColor: 'orange'
           }}
           layerTypes={['TrafficLayer']}
           bootstrapURLKeys={{ key: 'AIzaSyBy3SCwdFsIntFwoi-uMjPaPMCtYeRWnFQ' }}
@@ -101,9 +99,7 @@ const Map: React.FC<IMap> = ({
   return (
     // Important! Always set the container height explicitly
 
-    <MapDiv>
-      {loadMap && renderMap()}
-    </MapDiv>
+    <MapDiv>{loadMap && renderMap()}</MapDiv>
   );
 };
 
