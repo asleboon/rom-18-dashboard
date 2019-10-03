@@ -5,7 +5,7 @@ import { History } from 'history';
 import { animated, useSpring } from 'react-spring';
 import { PIXABAY_BASE_URL } from './../../api'
 import { useHistory } from "react-router"
-import { IPage } from './PublicTransport'
+import { IPage } from '../../types/Page'
 
 const ImageContainer = styled.div`
   max-height: 100%;
@@ -23,7 +23,9 @@ const Image = styled(animated.img)`
 
 
 const Animal: React.FC<IPage> = ({
-  changePage
+  changePage,
+  seconds,
+  pageNumber
 }) => {
   let history = useHistory();
   // changePage(history, '/')
@@ -32,10 +34,13 @@ const Animal: React.FC<IPage> = ({
 
   React.useEffect(() => {
     fetchImage();
-    // setInterval(() => {
-    //   history.push('/kollektiv')
-    // }, 10500)
   }, [])
+
+  React.useEffect(() => {
+    if (seconds === 100) {
+      changePage(history, '/')
+    }
+  }, [seconds])
 
   const fetchImage = async () => {
     let res = await axios.get(`${PIXABAY_BASE_URL}?key=13807530-1be241224f9cb9953219d6a4d&q=animal&safesearch=true&per_page=50`);
