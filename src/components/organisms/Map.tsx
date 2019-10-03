@@ -42,7 +42,6 @@ const Map: React.FC<IPage> = ({
 
   let history = useHistory();
   React.useEffect(() => {
-    console.log(seconds)
     if (seconds === 100) {
       changePage(history, '/kart')
     }

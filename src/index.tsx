@@ -49,7 +49,7 @@ const App: React.FC = () => {
     }
     interval = setInterval(() => {
       setSeconds(seconds => seconds + 1);
-    }, 100);
+    }, 200);
 
     return () => clearInterval(interval);
   }, [isActive, seconds]);
@@ -60,8 +60,6 @@ const App: React.FC = () => {
 
   const changePage = (history: any, path: string) => {
     let idx = pages.findIndex(page => page.path === path);
-    console.log(idx)
-    console.log(pages.length - 1)
     if (idx !== -1) {
       if (idx === (pages.length - 1)) {
         history.push(pages[0].path)
