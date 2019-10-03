@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { animated, useSpring } from 'react-spring';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment'
-
+import 'moment/locale/nb'
 
 interface LinkTextProps {
   isActive: boolean;
@@ -43,6 +43,30 @@ const BorderBottom = styled.div`
   left: 50%;
 `
 
+const ClockContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 250px;
+  background-color: black;
+  padding-right: auto;
+  position: absolute;
+  left: 10px;
+  top: 20px;
+  border-radius: 3px;
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.7);
+`
+
+const Clock = styled.p`
+  color: white;
+  width: 100px;
+  padding-left: 22px;
+`
+const Time = styled.p`
+  color: white;
+  width: 100px;
+  padding-left: 22px;
+`
+
 const Header: React.FC = () => {
   let currentLocation = window.location.pathname;
   const headerProps = useSpring({ opacity: 1, from: { opacity: 0 } });
@@ -56,6 +80,10 @@ const Header: React.FC = () => {
 
   return (
     <HeaderContainer style={headerProps}>
+      <ClockContainer>
+        <Clock>{moment().format('HH : mm : ss')}</Clock>
+        <Time>{moment().format('dddd').toUpperCase()}</Time>
+      </ClockContainer>
       <LinkText>
         <Link to="/">Bilde</Link>
         <BorderBottom isActive={decideIfActive('/')} />

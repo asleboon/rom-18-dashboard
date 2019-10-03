@@ -16,7 +16,7 @@ const ImageContainer = styled.div`
 `
 
 const Image = styled(animated.img)`
-  height: 80vh;
+  height: 70vh;
   width: 70vw;
   /* border: 5px solid white; */
 `
@@ -42,8 +42,8 @@ const Animal: React.FC<IPage> = ({
   }, [seconds])
 
   const fetchImage = async () => {
-    const perPage = 200;
-    const randomPage = Math.round((Math.random() * 50))
+    const perPage = 199;
+    const randomPage = Math.round((Math.random() * 3))
     let res = await axios.get(`${PIXABAY_BASE_URL}?key=13807530-1be241224f9cb9953219d6a4d&q=animal&safesearch=true&per_page=${perPage}&page=${randomPage}`);
     let idx = Math.round((Math.random() * 199))
     setImage(res.data.hits[idx].largeImageURL)

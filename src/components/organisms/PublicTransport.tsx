@@ -32,11 +32,11 @@ const PublicTransport: React.FC<IPage> = ({
 }) => {
   let history = useHistory();
   const animationProps = useSpring({ opacity: 1, from: { opacity: 0 }, config: { duration: 2000 } })
-  // React.useEffect(() => {
-  //   if (seconds === 100) {
-  //     changePage(history, '/kollektiv')
-  //   }
-  // }, [seconds])
+  React.useEffect(() => {
+    if (seconds === 100) {
+      changePage(history, '/kollektiv')
+    }
+  }, [seconds])
   return (
     <PublicTransportContainer style={animationProps}>
       <Transport stopIds={['NSR:StopPlace:27172', 'NSR:StopPlace:362', 'NSR:StopPlace:26919']} />
