@@ -8,8 +8,8 @@ import TransportRow from './TransportRow'
 
 const TransportTable = styled.div`
   display: flex;
-  width: 60vw;
   flex-direction: column;
+  margin: 0 10px;
 `
 
 const TransportTitle = styled.h3`
@@ -75,14 +75,14 @@ const Transport: React.FC<ITransport> = ({
 
   return (
     <TransportTable>
-      <TransportTitle>Avgangstider</TransportTitle>
-      <TransportTableHeader>
+      {/* <TransportTitle>Avgangstider</TransportTitle> */}
+      {/* <TransportTableHeader>
         <HeaderText>Planlagt Avgang</HeaderText>
         <HeaderText>Forventet Avgang</HeaderText>
         <HeaderText>Fra</HeaderText>
         <HeaderText>Til</HeaderText>
         <HeaderText>Type</HeaderText>
-      </TransportTableHeader>
+      </TransportTableHeader> */}
       {departures.length > 0 &&
         departures.map((departure: IDeparture, idx: number) => {
           // let transportMode = departure.serviceJourney.journeyPattern.line.transportMode;
@@ -94,6 +94,7 @@ const Transport: React.FC<ITransport> = ({
               expectedArrivalTime={departure.expectedArrivalTime}
               destinationDisplay={departure.destinationDisplay}
               serviceJourney={departure.serviceJourney}
+              quay={departure.quay}
             />
           )
         }

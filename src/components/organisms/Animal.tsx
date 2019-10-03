@@ -16,8 +16,8 @@ const ImageContainer = styled.div`
 `
 
 const Image = styled(animated.img)`
-  width: 100vw;
-  width: 100vh;
+  height: 80vh;
+  width: 70vw;
   /* border: 5px solid white; */
 `
 
@@ -28,9 +28,8 @@ const Animal: React.FC<IPage> = ({
   pageNumber
 }) => {
   let history = useHistory();
-  // changePage(history, '/')
   const [image, setImage] = React.useState();
-  const imageProps = useSpring({ opacity: 1, from: { opacity: 0 }, config: { duration: 3000 } })
+  const animationProps = useSpring({ opacity: 1, from: { opacity: 0 }, config: { duration: 3000 } })
 
   React.useEffect(() => {
     fetchImage();
@@ -52,7 +51,7 @@ const Animal: React.FC<IPage> = ({
     <ImageContainer>
       {
         image && (
-          <Image style={imageProps} src={image} />
+          <Image style={animationProps} src={image} />
         )
       }
     </ImageContainer>
