@@ -26,12 +26,9 @@ const MapElement = styled(GoogleMapReact)`
   width: 60%;
 `;
 
-interface IMap {
-  history: History,
-}
 
-const Map: React.FC<IMap> = ({
-  history
+const Map: React.FC<IPage> = ({
+  changePage
 }) => {
   const [deaultCenter, setDefaultCenter] = useState({ lat: 58.917064, lng: 5.718236 });
   const [zoom, setZoom] = useState(15);

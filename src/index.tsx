@@ -12,16 +12,27 @@ import Map from './components/organisms/Map';
 import PublicTransport from './components/organisms/PublicTransport';
 import './index.css';
 
-const pages = ['/', '/kollektiv', '/kart'];
+interface IPage {
+  path: string;
+}
+
+// Add weighting in pages objects
+const pages: IPage[] = [
+  { path: '/' },
+  { path: '/kollektiv' },
+  { path: '/kart' },
+];
 
 const App: React.FC = () => {
-  // console.log(history.location)
-  // const [currentPage, setCurrentPage] = React.useState(0)
-  // const transitions = useTransition(index, p => p, {
-  //   from: { opacity: 0, transform: 'translate3d(100%,0,0)' },
-  //   enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
-  //   leave: { opacity: 0, transform: 'translate3d(-50%,0,0)' },
-  // })
+
+  const changePage = (history: any, path: string) => {
+    // console.log(history)
+    let idx = pages.findIndex(page => page.path === path);
+    if (idx !== -1) {
+      // if index is the last? the push [0]
+      history.push(pages[idx + 1])
+    }
+  }
 
   return (
     <ApolloProvider client={client}>
@@ -29,9 +40,9 @@ const App: React.FC = () => {
         <Router>
           <Header />
           <Switch>
-            <Route exact path="/" component={Animal} />
-            <Route exact path="/kollektiv" component={PublicTransport} />
-            <Route exact path="/kart" component={Map} />
+            <Route exact path="/"><Animal changePage={changePage} /></Route>
+            <Route exact path="/kollektiv"><PublicTransport changePage={changePage} /></Route>
+            <Route exact path="/kart"><Map changePage={changePage} /></Route>
             {/* <Route exact path="/kantine" component={} /> */}
           </Switch>
         </Router>

@@ -8,12 +8,12 @@ const PublicTransportContainer = styled.div`
   justify-content: center;
 `
 
-interface IPublicTransport {
-  history: History,
+export interface IPage {
+  changePage: (history: any, path: string) => void;
 }
 
-const PublicTransport: React.FC<IPublicTransport> = ({
-  history
+const PublicTransport: React.FC<IPage> = ({
+  changePage
 }) => {
   React.useEffect(() => {
     // setInterval(() => {

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { History } from 'history';
 import { animated, useSpring } from 'react-spring';
 import { PIXABAY_BASE_URL } from './../../api'
+import { useHistory } from "react-router"
 
 const ImageContainer = styled.div`
   max-height: 100%;
@@ -19,13 +20,12 @@ const Image = styled(animated.img)`
   /* border: 5px solid white; */
 `
 
-interface IPageProps {
-  history: History
-}
 
-const Animal: React.FC<IPageProps> = ({
-  history,
+const Animal: React.FC<IPage> = ({
+  changePage
 }) => {
+  let history = useHistory();
+  // changePage(history, '/')
   const [image, setImage] = React.useState();
   const imageProps = useSpring({ opacity: 1, from: { opacity: 0 }, config: { duration: 3000 } })
 
