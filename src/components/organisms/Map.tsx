@@ -6,6 +6,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import moment from 'moment';
 import { MapStyles } from '../atoms/MapStyle';
 import { History } from 'history';
+import { IPage } from '../../types/Page';
+import { useHistory } from 'react-router';
 
 const MapDiv = styled.div`
   height: 80vh;
@@ -26,40 +28,44 @@ const MapElement = styled(GoogleMapReact)`
   box-shadow: 10px 10px black;
 `;
 
-interface IMap {
-  history: History;
-}
-
-const Map: React.FC<IMap> = ({ history }) => {
+const Map: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
   const [deaultCenter, setDefaultCenter] = useState({ lat: 58.917064, lng: 5.718236 });
   const [zoom, setZoom] = useState(15);
-  const [loadMap, setLoadMap] = useState(false);
-  const [seconds, setSeconds] = useState(0);
+  const [loadMap, setLoadMap] = useState(true);
+  // const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(true);
 
-  useEffect(() => {
-    checkTime();
-    // setInterval(() => {
-    //   history.push('/')
-    // }, 11000)
-  }, []);
-
-  useEffect(() => {
-    let interval: any = null;
-    if (seconds === 101) {
-      reset();
+  let history = useHistory();
+  React.useEffect(() => {
+    // console.log(seconds);
+    if (seconds === 100) {
+      changePage(history, '/kart');
     }
-    interval = setInterval(() => {
-      setSeconds(seconds => seconds + 1);
-    }, 100);
+  }, [seconds]);
 
-    return () => clearInterval(interval);
-  }, [isActive, seconds]);
+  // useEffect(() => {
+  //   checkTime();
+  //   // setInterval(() => {
+  //   //   history.push('/')
+  //   // }, 11000)
+  // }, []);
 
-  const reset = () => {
-    checkTime();
-    setSeconds(0);
-  };
+  // useEffect(() => {
+  //   let interval: any = null;
+  //   if (seconds === 101) {
+  //     reset();
+  //   }
+  //   interval = setInterval(() => {
+  //     setSeconds(seconds => seconds + 1);
+  //   }, 100);
+
+  //   return () => clearInterval(interval);
+  // }, [isActive, seconds]);
+
+  // const reset = () => {
+  //   checkTime();
+  //   setSeconds(0);
+  // };
 
   const checkTime = () => {
     // const format: string = 'hh:mm:ss';
@@ -75,9 +81,9 @@ const Map: React.FC<IMap> = ({ history }) => {
     // }
   };
 
-  const toggle = () => {
-    setIsActive(!isActive);
-  };
+  // const toggle = () => {
+  //   setIsActive(!isActive);
+  // }
 
   const renderMap = () => {
     return (

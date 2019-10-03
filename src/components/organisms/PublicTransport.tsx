@@ -2,29 +2,26 @@ import React from 'react';
 import Transport from '../molecules/Transport';
 import styled from 'styled-components';
 import { History } from 'history';
+import { IPage } from '../../types/Page';
+import { useHistory } from 'react-router';
 
 const PublicTransportContainer = styled.div`
   display: flex;
   justify-content: center;
-`
+`;
 
-interface IPublicTransport {
-  history: History,
-}
-
-const PublicTransport: React.FC<IPublicTransport> = ({
-  history
-}) => {
+const PublicTransport: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
+  let history = useHistory();
   React.useEffect(() => {
-    // setInterval(() => {
-    //   history.push('/kart')
-    // }, 11000)
-  }, [])
+    if (seconds === 100) {
+      changePage(history, '/kollektiv');
+    }
+  }, [seconds]);
   return (
     <PublicTransportContainer>
       <Transport stopIds={['NSR:StopPlace:27172', 'NSR:StopPlace:362', 'NSR:StopPlace:26919']} />
     </PublicTransportContainer>
-  )
-}
+  );
+};
 
-export default PublicTransport
+export default PublicTransport;
