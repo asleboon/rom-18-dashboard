@@ -5,6 +5,7 @@ import { History } from 'history';
 import { animated, useSpring } from 'react-spring';
 import { PIXABAY_BASE_URL } from './../../api'
 import { useHistory } from "react-router"
+import { IPage } from './PublicTransport'
 
 const ImageContainer = styled.div`
   max-height: 100%;

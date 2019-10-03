@@ -6,6 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import moment from 'moment';
 import { MapStyles } from '../atoms/MapStyle';
 import { History } from 'history';
+import { IPage } from './PublicTransport'
 
 //const AnyReactComponent = ({ text }) => <div>{text}</div>;
 const MapDiv = styled.div`
