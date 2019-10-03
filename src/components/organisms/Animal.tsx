@@ -42,8 +42,10 @@ const Animal: React.FC<IPage> = ({
   }, [seconds])
 
   const fetchImage = async () => {
-    let res = await axios.get(`${PIXABAY_BASE_URL}?key=13807530-1be241224f9cb9953219d6a4d&q=animal&safesearch=true&per_page=50`);
-    let idx = Math.round((Math.random() * 49))
+    const perPage = 200;
+    const randomPage = Math.round((Math.random() * 50))
+    let res = await axios.get(`${PIXABAY_BASE_URL}?key=13807530-1be241224f9cb9953219d6a4d&q=animal&safesearch=true&per_page=${perPage}&page=${randomPage}`);
+    let idx = Math.round((Math.random() * 199))
     setImage(res.data.hits[idx].largeImageURL)
   }
 
