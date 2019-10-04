@@ -9,11 +9,8 @@
 
 Created with create-react-app /w Typescript.
 
-## Deployment
+## Hosting
 
-Deployment usin Zeit now.sh (Very easy deployment)
+Hosted on Azure - [https://dashboard18.azurewebsites.net/](https://dashboard18.azurewebsites.net/)
 
-## Environment Variables
-
-Environment variables are defined in the file now.json
-Guide [here](https://zeit.co/docs/v2/build-step/#using-environment-variables-and-secrets)
+[![Build Status](https://dev.azure.com/rom18/dashboard/_apis/build/status/dashboard?branchName=master)](https://dev.azure.com/rom18/dashboard/_build/latest?definitionId=2&branchName=master)
