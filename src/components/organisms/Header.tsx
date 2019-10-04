@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { animated, useSpring } from 'react-spring';
 import { NavLink } from 'react-router-dom';
-import moment from 'moment'
-import 'moment/locale/nb'
+import moment from 'moment';
+import 'moment/locale/nb';
 
 interface LinkTextProps {
   isActive: boolean;
@@ -36,12 +36,12 @@ const LinkText = styled.p`
 
 const BorderBottom = styled.div`
   width: 50px;
-  border-bottom: ${(p: LinkTextProps) => p.isActive ? '2px solid white' : 'none'}
+  border-bottom: ${(p: LinkTextProps) => (p.isActive ? '2px solid white' : 'none')}
   position: absolute;
   bottom: -10px;
   transform: translate(-50%,0);
   left: 50%;
-`
+`;
 
 const ClockContainer = styled.div`
   display: flex;
@@ -53,19 +53,19 @@ const ClockContainer = styled.div`
   left: 10px;
   top: 20px;
   border-radius: 3px;
-  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.7);
-`
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.7);
+`;
 
 const Clock = styled.p`
   color: white;
   width: 100px;
   padding-left: 22px;
-`
+`;
 const Time = styled.p`
   color: white;
   width: 100px;
   padding-left: 22px;
-`
+`;
 
 const Header: React.FC = () => {
   let currentLocation = window.location.pathname;
@@ -73,16 +73,20 @@ const Header: React.FC = () => {
 
   const decideIfActive = (str: string) => {
     if (str === currentLocation) {
-      return true
+      return true;
     }
-    return false
-  }
+    return false;
+  };
 
   return (
     <HeaderContainer style={headerProps}>
       <ClockContainer>
         <Clock>{moment().format('HH : mm : ss')}</Clock>
-        <Time>{moment().format('dddd').toUpperCase()}</Time>
+        <Time>
+          {moment()
+            .format('dddd')
+            .toUpperCase()}
+        </Time>
       </ClockContainer>
       <LinkText>
         <Link to="/">Bilde</Link>
@@ -95,6 +99,10 @@ const Header: React.FC = () => {
       <LinkText>
         <Link to="/kart">Kart</Link>
         <BorderBottom isActive={decideIfActive('/kart')} />
+      </LinkText>
+      <LinkText>
+        <Link to="/fagKaffe">Fag kaffe</Link>
+        <BorderBottom isActive={decideIfActive('/fagKaffe')} />
       </LinkText>
     </HeaderContainer>
   );

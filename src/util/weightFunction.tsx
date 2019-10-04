@@ -21,8 +21,6 @@ export const googleMapsWeight = (pages: IPage[], setPage: Function) => {
       }
     });
     setPage(pages);
-    console.log(pages);
-    console.log('is between');
   } else {
     const newPage = { path: '/kart', weight: 1, isActive: false };
     pages.map((page, index) => {
@@ -31,7 +29,24 @@ export const googleMapsWeight = (pages: IPage[], setPage: Function) => {
       }
     });
     setPage(pages);
-    // setLoadMap(false);
-    console.log('is not between');
+  }
+};
+
+export const fagKaffeReminder = (pages: IPage[], setPage: Function) => {
+  const time = moment();
+  console.log(time);
+  if (time.week() % 2 !== 0) {
+    if (time.day() === 5)
+      if (time.hour() === 11) {
+        if (time.minute() < 60 && time.minute() > 45) {
+          const newPage = { path: '/fagKaffe', weight: 2, isActive: true };
+          pages.map((page, index) => {
+            if (page.path === newPage.path) {
+              pages[index] = newPage;
+            }
+          });
+          setPage(pages);
+        }
+      }
   }
 };

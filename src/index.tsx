@@ -11,7 +11,8 @@ import Layout from './components/organisms/Layout';
 import Animal from './components/organisms/Animal';
 import Map from './components/organisms/Map';
 import PublicTransport from './components/organisms/PublicTransport';
-import { googleMapsWeight } from './util/weightFunction';
+import FagKaffe from './components/molecules/FagKaffe';
+import { googleMapsWeight, fagKaffeReminder } from './util/weightFunction';
 import './index.css';
 import { valueFromAST } from 'graphql';
 
@@ -45,7 +46,8 @@ const App: React.FC = () => {
   const [pages, setPages] = useState([
     { path: '/', weight: 1, isActive: true },
     { path: '/kollektiv', weight: 1, isActive: true },
-    { path: '/kart', weight: 1, isActive: true }
+    { path: '/kart', weight: 1, isActive: true },
+    { path: '/fagKaffe', weight: 1, isActive: false }
   ]);
 
   useEffect(() => {
@@ -112,9 +114,11 @@ const App: React.FC = () => {
     return showingPages;
   };
   const changePage = (history: any, path: string) => {
+    fagKaffeReminder(pages, setPages);
     googleMapsWeight(pages, setPages);
     const newPages = currentlyShowingPages();
     let idx = newPages.findIndex(newPages => newPages.path === path);
+    console.log(newPages);
     if (weightChecker(newPages)) {
       if (idx !== -1) {
         if (idx === newPages.length - 1) {
@@ -152,6 +156,9 @@ const App: React.FC = () => {
             </Route>
             <Route exact path="/kart">
               <Map changePage={changePage} seconds={seconds} pageNumber={3} />
+            </Route>
+            <Route exact path="/fagKaffe">
+              <FagKaffe changePage={changePage} seconds={seconds} pageNumber={3} />
             </Route>
             {/* <Route exact path="/kantine" component={} /> */}
           </Switch>
