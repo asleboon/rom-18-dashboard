@@ -14,6 +14,7 @@ import PublicTransport from './components/organisms/PublicTransport';
 import { googleMapsWeight } from './util/weightFunction';
 import './index.css';
 import { valueFromAST } from 'graphql';
+import Comic from './components/organisms/Comic'
 
 const AnimatedDonut = styled(CircularProgress)`
   height: 25px;
@@ -152,7 +153,9 @@ const App: React.FC = () => {
             <Route exact path="/kart">
               <Map changePage={changePage} seconds={seconds} pageNumber={3} />
             </Route>
-            {/* <Route exact path="/kantine" component={} /> */}
+            <Route exact path="/tegneserie">
+              <Comic changePage={changePage} seconds={seconds} pageNumber={4} />
+            </Route>
           </Switch>
         </Router>
       </Layout>
