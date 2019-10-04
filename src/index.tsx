@@ -12,8 +12,8 @@ import Animal from './components/organisms/Animal';
 import Map from './components/organisms/Map';
 import PublicTransport from './components/organisms/PublicTransport';
 import { googleMapsWeight } from './util/weightFunction';
-import './index.css';
-import { valueFromAST } from 'graphql';
+import './index.css'
+import Comic from './components/organisms/ComicStrip'
 
 const AnimatedDonut = styled(CircularProgress)`
   height: 25px;
@@ -45,7 +45,8 @@ const App: React.FC = () => {
   const [pages, setPages] = useState([
     { path: '/', weight: 1, isActive: true },
     { path: '/kollektiv', weight: 1, isActive: true },
-    { path: '/kart', weight: 1, isActive: true }
+    { path: '/kart', weight: 1, isActive: true },
+    { path: '/tegneserie', weight: 1, isActive: true },
   ]);
 
   useEffect(() => {
@@ -152,7 +153,9 @@ const App: React.FC = () => {
             <Route exact path="/kart">
               <Map changePage={changePage} seconds={seconds} pageNumber={3} />
             </Route>
-            {/* <Route exact path="/kantine" component={} /> */}
+            <Route exact path="/tegneserie">
+              <Comic changePage={changePage} seconds={seconds} pageNumber={4} />
+            </Route>
           </Switch>
         </Router>
       </Layout>
