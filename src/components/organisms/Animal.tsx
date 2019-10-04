@@ -1,8 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { History } from 'history';
 import { animated, useSpring } from 'react-spring';
 import { PIXABAY_BASE_URL } from './../../api'
+import { useHistory } from "react-router"
+import { IPage } from '../../types/Page'
 
 const ImageContainer = styled.div`
   max-height: 100%;
@@ -13,28 +16,44 @@ const ImageContainer = styled.div`
 `
 
 const Image = styled(animated.img)`
-  width: 100vw;
-  width: 100vh;
+  height: 70vh;
+  width: 70vw;
   /* border: 5px solid white; */
 `
 
-const Animal: React.FC = () => {
+
+const Animal: React.FC<IPage> = ({
+  changePage,
+  seconds,
+  pageNumber
+}) => {
+  let history = useHistory();
   const [image, setImage] = React.useState();
-  const imageProps = useSpring({ opacity: 1, from: { opacity: 0 }, config: { duration: 3000 } })
+  const animationProps = useSpring({ opacity: 1, from: { opacity: 0 }, config: { duration: 3000 } })
+
   React.useEffect(() => {
     fetchImage();
   }, [])
 
+  React.useEffect(() => {
+    if (seconds === 100) {
+      changePage(history, '/')
+    }
+  }, [seconds])
+
   const fetchImage = async () => {
-    let res = await axios.get(`${PIXABAY_BASE_URL}?key=13807530-1be241224f9cb9953219d6a4d&q=animal`);
-    setImage(res.data.hits[0].largeImageURL)
+    const perPage = 199;
+    const randomPage = Math.round((Math.random() * 3))
+    let res = await axios.get(`${PIXABAY_BASE_URL}?key=13807530-1be241224f9cb9953219d6a4d&q=animal&safesearch=true&per_page=${perPage}&page=${randomPage}`);
+    let idx = Math.round((Math.random() * 199))
+    setImage(res.data.hits[idx].largeImageURL)
   }
 
   return (
     <ImageContainer>
       {
         image && (
-          <Image style={imageProps} src={image} />
+          <Image style={animationProps} src={image} />
         )
       }
     </ImageContainer>
