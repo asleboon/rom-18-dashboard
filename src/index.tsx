@@ -54,7 +54,7 @@ const App: React.FC = () => {
       reset();
     }
     interval = setInterval(() => {
-      setSeconds(seconds => seconds + 1);
+      setSeconds((seconds: number) => seconds + 1);
     }, 200);
 
     return () => clearInterval(interval);
@@ -104,7 +104,7 @@ const App: React.FC = () => {
   };
   const currentlyShowingPages = () => {
     let showingPages: IPage[] = [];
-    pages.map(page => {
+    pages.map((page: IPage) => {
       if (page.isActive) {
         showingPages.push(page);
       }
@@ -113,9 +113,7 @@ const App: React.FC = () => {
   };
   const changePage = (history: any, path: string) => {
     googleMapsWeight(pages, setPages);
-    console.log(pages);
     const newPages = currentlyShowingPages();
-    console.log(newPages);
     let idx = newPages.findIndex(newPages => newPages.path === path);
     if (weightChecker(newPages)) {
       if (idx !== -1) {
@@ -125,8 +123,11 @@ const App: React.FC = () => {
           if (newPages[idx + 1].isActive) {
             history.push(newPages[idx + 1].path);
           } else {
+            history.push(newPages[0].path);
           }
         }
+      } else {
+        history.push(newPages[0].path);
       }
     } else {
       const nextPage = nextPageCalculations(newPages);
