@@ -141,7 +141,7 @@ const App: React.FC = () => {
       <Layout>
         <Router>
           <Circle>
-            <AnimatedDonut value={seconds} variant="static" size="30px" />
+            <AnimatedDonut color="inherit" value={seconds} variant="static" size="30px" />
           </Circle>
           <Header />
           <Switch>

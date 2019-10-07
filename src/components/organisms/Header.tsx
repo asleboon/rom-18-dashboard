@@ -10,33 +10,36 @@ interface LinkTextProps {
 }
 
 const HeaderContainer = styled(animated.div)`
-  height: 75px;
+  height: 65px;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  padding-bottom: 20px;
+  background-color: white;
+  margin-bottom: 100px;
 `;
 
+const LinkContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
 const Link = styled(NavLink)`
-  color: white;
   font-size: 20px;
   text-decoration: none;
   padding: 0 10px;
-  color: white;
+  color: black;
 `;
 
 const LinkText = styled.p`
-  color: white;
   font-size: 20px;
   text-decoration: none;
   padding: 0 10px;
-  color: white;
   position: relative;
 `;
 
 const BorderBottom = styled.span`
   width: 50px;
-  border-bottom: ${(p: LinkTextProps) => p.isActive ? '2px solid white' : 'none'}
+  border-bottom: ${(p: LinkTextProps) => p.isActive ? '2px solid black' : 'none'};
   position: absolute;
   bottom: -10px;
   transform: translate(-50%,0);
@@ -47,22 +50,17 @@ const ClockContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 250px;
-  background-color: black;
+  /* background-color: black; */
   padding-right: auto;
-  position: absolute;
-  left: 10px;
-  top: 20px;
-  border-radius: 3px;
-  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.7);
+  /* border-radius: 3px; */
+  color: black;
 `
 
 const Clock = styled.p`
-  color: white;
   width: 100px;
   padding-left: 22px;
 `
 const Time = styled.p`
-  color: white;
   width: 100px;
   padding-left: 22px;
 `
@@ -84,22 +82,24 @@ const Header: React.FC = () => {
         <Clock>{moment().format('HH : mm : ss')}</Clock>
         <Time>{moment().format('dddd').toUpperCase()}</Time>
       </ClockContainer>
-      <LinkText>
-        <Link to="/">Bilde</Link>
-        <BorderBottom isActive={decideIfActive('/')} />
-      </LinkText>
-      <LinkText>
-        <Link to="/kollektiv">Kollektiv</Link>
-        <BorderBottom isActive={decideIfActive('/kollektiv')} />
-      </LinkText>
-      <LinkText>
-        <Link to="/kart">Kart</Link>
-        <BorderBottom isActive={decideIfActive('/kart')} />
-      </LinkText>
-      <LinkText>
-        <Link to="/tegneserie">xkcd</Link>
-        <BorderBottom isActive={decideIfActive('/tegneserie')} />
-      </LinkText>
+      <LinkContainer>
+        <LinkText>
+          <Link to="/">Bilde</Link>
+          <BorderBottom isActive={decideIfActive('/')} />
+        </LinkText>
+        <LinkText>
+          <Link to="/kollektiv">Kollektiv</Link>
+          <BorderBottom isActive={decideIfActive('/kollektiv')} />
+        </LinkText>
+        <LinkText>
+          <Link to="/kart">Kart</Link>
+          <BorderBottom isActive={decideIfActive('/kart')} />
+        </LinkText>
+        <LinkText>
+          <Link to="/tegneserie">xkcd</Link>
+          <BorderBottom isActive={decideIfActive('/tegneserie')} />
+        </LinkText>
+      </LinkContainer>
     </HeaderContainer>
   );
 };
