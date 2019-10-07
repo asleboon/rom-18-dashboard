@@ -77,7 +77,6 @@ const Transport: React.FC<ITransport> = ({
     <TransportTable>
       {departures.length > 0 &&
         departures.map((departure: IDeparture, idx: number) => {
-          // let transportMode = departure.serviceJourney.journeyPattern.line.transportMode;
           return (
             <TransportRow
               key={idx + departure.aimedArrivalTime}

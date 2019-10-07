@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import { PIXABAY_BASE_URL } from './../../api'
+import { PIXABAY_BASE_URL } from '../../constants/api'
 import { useHistory } from "react-router"
 import { IPage } from '../../types/Page'
 import { CircularProgress } from '@material-ui/core';

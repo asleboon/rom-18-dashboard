@@ -4,7 +4,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from 'react-router';
 import axios from 'axios'
 import { IPage } from '../../types/Page';
-import { XKCD_URL } from '../../api'
+import { XKCD_URL } from '../../constants/api'
 
 const Container = styled.div`
   display: flex;
