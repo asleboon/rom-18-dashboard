@@ -59,7 +59,6 @@ const Comic: React.FC<IPage> = ({
   const fetchComic = async () => {
     setLoading(true)
     let res = await axios.get(XKCD_URL);
-    console.log(res.data)
     setComic(res.data);
     setLoading(false)
   }

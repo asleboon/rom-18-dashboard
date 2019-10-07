@@ -79,8 +79,6 @@ const Header: React.FC<IHeader> = ({
     return false
   }
 
-
-
   return (
     <HeaderContainer className="animated fadeIn">
       <ClockContainer>
