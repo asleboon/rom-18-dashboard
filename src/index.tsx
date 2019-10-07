@@ -12,8 +12,8 @@ import Animal from './components/organisms/Animal';
 import Map from './components/organisms/Map';
 import PublicTransport from './components/organisms/PublicTransport';
 import { googleMapsWeight } from './util/weightFunction';
-import './index.css';
-import { valueFromAST } from 'graphql';
+import './index.css'
+import Comic from './components/organisms/ComicStrip'
 
 const AnimatedDonut = styled(CircularProgress)`
   height: 25px;
@@ -45,7 +45,8 @@ const App: React.FC = () => {
   const [pages, setPages] = useState([
     { path: '/', weight: 1, isActive: true },
     { path: '/kollektiv', weight: 1, isActive: true },
-    { path: '/kart', weight: 1, isActive: true }
+    { path: '/kart', weight: 1, isActive: true },
+    { path: '/tegneserie', weight: 1, isActive: true },
   ]);
 
   useEffect(() => {
@@ -54,7 +55,7 @@ const App: React.FC = () => {
       reset();
     }
     interval = setInterval(() => {
-      setSeconds(seconds => seconds + 1);
+      setSeconds((seconds: number) => seconds + 1);
     }, 200);
 
     return () => clearInterval(interval);
@@ -104,7 +105,7 @@ const App: React.FC = () => {
   };
   const currentlyShowingPages = () => {
     let showingPages: IPage[] = [];
-    pages.map(page => {
+    pages.map((page: IPage) => {
       if (page.isActive) {
         showingPages.push(page);
       }
@@ -113,9 +114,7 @@ const App: React.FC = () => {
   };
   const changePage = (history: any, path: string) => {
     googleMapsWeight(pages, setPages);
-    console.log(pages);
     const newPages = currentlyShowingPages();
-    console.log(newPages);
     let idx = newPages.findIndex(newPages => newPages.path === path);
     if (weightChecker(newPages)) {
       if (idx !== -1) {
@@ -125,8 +124,11 @@ const App: React.FC = () => {
           if (newPages[idx + 1].isActive) {
             history.push(newPages[idx + 1].path);
           } else {
+            history.push(newPages[0].path);
           }
         }
+      } else {
+        history.push(newPages[0].path);
       }
     } else {
       const nextPage = nextPageCalculations(newPages);
@@ -152,7 +154,9 @@ const App: React.FC = () => {
             <Route exact path="/kart">
               <Map changePage={changePage} seconds={seconds} pageNumber={3} />
             </Route>
-            {/* <Route exact path="/kantine" component={} /> */}
+            <Route exact path="/tegneserie">
+              <Comic changePage={changePage} seconds={seconds} pageNumber={4} />
+            </Route>
           </Switch>
         </Router>
       </Layout>
