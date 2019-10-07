@@ -7,7 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { client } from './graphql/client';
 import Header from './components/organisms/Header';
 import Layout from './components/organisms/Layout';
-import Animal from './components/organisms/Animal';
+import Animal from './components/organisms/Image';
 import Map from './components/organisms/Map';
 import PublicTransport from './components/organisms/PublicTransport';
 import { googleMapsWeight } from './util/weightFunction';
