@@ -93,7 +93,6 @@ const Transport: React.FC<ITransport> = ({
       let data = await refineData(stopPlaces);
       let sortedByDate = await sortDataByDate(data);
       let sortedByType = await sortByTransportType(sortedByDate);
-      console.log(sortedByType[0])
       setBusDepartures(sortedByType[0])
       setTrainDepartures(sortedByType[1])
     }
