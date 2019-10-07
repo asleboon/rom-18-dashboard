@@ -15,9 +15,9 @@ const ImageContainer = styled.div`
 `
 
 const Image = styled.img`
-  height: 70vh;
-  width: 70vw;
-  /* border: 5px solid white; */
+  max-height: 100%;
+  border: 1px solid #afafaf;
+  border-radius: 4px;
 `
 
 
@@ -42,11 +42,12 @@ const Animal: React.FC<IPage> = ({
 
   const fetchImage = async () => {
     setLoading(true)
-    const perPage = 199;
-    const randomPage = Math.round((Math.random() * 50))
-    let res = await axios.get(`${PIXABAY_BASE_URL}?key=13807530-1be241224f9cb9953219d6a4d&q=animal&safesearch=true&per_page=${perPage}&pagi=${randomPage}`);
+    const perPage = 200;
+    const searchTerm = 'kitten'
+    const randomPage = Math.round((Math.random() * 10))
+    let res = await axios.get(`${PIXABAY_BASE_URL}?key=13807530-1be241224f9cb9953219d6a4d&q=${searchTerm}&order=popular&safesearch=true&per_page=${perPage}&pagi=${randomPage}`);
     let idx = Math.round((Math.random() * 199))
-    setImage(res.data.hits[idx].largeImageURL)
+    setImage(res.data.hits[idx].webformatURL)
     setLoading(false)
   }
 
