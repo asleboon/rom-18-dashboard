@@ -13,14 +13,16 @@ const PublicTransportContainer = styled.div`
 const RealTimeMap = styled.embed`
   background: transparent;
   width: 700px;
-  height: 660px;
+  height: 670px;
   border: none;
 `;
 
 const RealTimeMapContainer = styled.div`
   width: 550px;
-  height: 556px;
+  height: 568px;
   overflow: hidden;
+  border: 1px solid #afafaf;
+  border-radius: 4px;
 `;
 
 const PublicTransport: React.FC<IPage> = ({ changePage, seconds }) => {

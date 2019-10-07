@@ -43,7 +43,7 @@ const Map: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
           options={{
             styles: MapStyles,
             disableDefaultUI: true,
-            backgroundColor: 'orange'
+            backgroundColor: 'white',
           }}
           layerTypes={['TrafficLayer']}
           bootstrapURLKeys={{ key: 'AIzaSyBy3SCwdFsIntFwoi-uMjPaPMCtYeRWnFQ' }}
