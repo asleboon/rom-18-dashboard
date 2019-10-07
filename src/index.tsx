@@ -4,11 +4,10 @@ import styled from 'styled-components';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { useTransition, animated } from 'react-spring';
 import { client } from './graphql/client';
 import Header from './components/organisms/Header';
 import Layout from './components/organisms/Layout';
-import Animal from './components/organisms/Animal';
+import Animal from './components/organisms/Image';
 import Map from './components/organisms/Map';
 import PublicTransport from './components/organisms/PublicTransport';
 import { googleMapsWeight } from './util/weightFunction';
@@ -21,6 +20,7 @@ const AnimatedDonut = styled(CircularProgress)`
   background: transparent;
   border-radius: 50%;
   display: inline-block;
+  z-index: 10;
 `;
 
 const Circle = styled.div`
@@ -36,7 +36,7 @@ interface IPage {
 }
 
 // Add weighting in pages objects
-//const pages: IPage[] = [{ path: '/', weight: 1 }, { path: '/kollektiv', weight: 1 }, { path: '/kart', weight: 1 }];
+//const pages: IPage[] = [{ path: '/', weight: 1 }, { path: '/kollektiv', weight: 1 }, { path: '/trafikk', weight: 1 }];
 
 const App: React.FC = () => {
   const [seconds, setSeconds] = useState(0);
@@ -45,14 +45,14 @@ const App: React.FC = () => {
   const [pages, setPages] = useState([
     { path: '/', weight: 1, isActive: true },
     { path: '/kollektiv', weight: 1, isActive: true },
-    { path: '/kart', weight: 1, isActive: true },
+    { path: '/trafikk', weight: 1, isActive: true },
     { path: '/tegneserie', weight: 1, isActive: true },
   ]);
 
   useEffect(() => {
     let interval: any = null;
     if (seconds === 100) {
-      reset();
+      resetTimer();
     }
     interval = setInterval(() => {
       setSeconds((seconds: number) => seconds + 1);
@@ -61,7 +61,7 @@ const App: React.FC = () => {
     return () => clearInterval(interval);
   }, [isActive, seconds]);
 
-  const reset = () => {
+  const resetTimer = () => {
     setSeconds(0);
   };
 
@@ -103,6 +103,7 @@ const App: React.FC = () => {
     });
     return value;
   };
+
   const currentlyShowingPages = () => {
     let showingPages: IPage[] = [];
     pages.map((page: IPage) => {
@@ -112,6 +113,7 @@ const App: React.FC = () => {
     });
     return showingPages;
   };
+
   const changePage = (history: any, path: string) => {
     googleMapsWeight(pages, setPages);
     const newPages = currentlyShowingPages();
@@ -143,7 +145,7 @@ const App: React.FC = () => {
           <Circle>
             <AnimatedDonut color="inherit" value={seconds} variant="static" size="30px" />
           </Circle>
-          <Header />
+          <Header resetTimer={resetTimer} />
           <Switch>
             <Route exact path="/">
               <Animal changePage={changePage} seconds={seconds} pageNumber={1} />
@@ -151,7 +153,7 @@ const App: React.FC = () => {
             <Route exact path="/kollektiv">
               <PublicTransport changePage={changePage} seconds={seconds} pageNumber={2} />
             </Route>
-            <Route exact path="/kart">
+            <Route exact path="/trafikk">
               <Map changePage={changePage} seconds={seconds} pageNumber={3} />
             </Route>
             <Route exact path="/tegneserie">

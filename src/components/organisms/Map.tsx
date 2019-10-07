@@ -1,11 +1,7 @@
-import React, { Component, useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import GoogleMapReact from 'google-map-react';
 import styled from 'styled-components';
-import { useSpring, animated } from 'react-spring';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import moment from 'moment';
 import { MapStyles } from '../atoms/MapStyle';
-import { History } from 'history';
 import { IPage } from '../../types/Page';
 import { useHistory } from 'react-router';
 
@@ -30,36 +26,32 @@ const MapElement = styled(GoogleMapReact)`
 const Map: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
   const [deaultCenter, setDefaultCenter] = useState({ lat: 58.917064, lng: 5.718236 });
   const [zoom, setZoom] = useState(15);
-  const [loadMap, setLoadMap] = useState(true);
-
   let history = useHistory();
+
   React.useEffect(() => {
     if (seconds === 100) {
-      changePage(history, '/kart');
+      changePage(history, '/trafikk');
     }
   }, [seconds]);
 
-  const renderMap = () => {
-    return (
+
+  return (
+    // Important! Always set the container height explicitly
+    <MapDiv className="animated fadeInLeft">
       <MapCenter>
         <MapElement
           options={{
             styles: MapStyles,
             disableDefaultUI: true,
-            backgroundColor: 'orange'
+            backgroundColor: 'white',
           }}
           layerTypes={['TrafficLayer']}
           bootstrapURLKeys={{ key: 'AIzaSyBy3SCwdFsIntFwoi-uMjPaPMCtYeRWnFQ' }}
           defaultCenter={deaultCenter}
           defaultZoom={zoom}
-        ></MapElement>
+        />
       </MapCenter>
-    );
-  };
-  return (
-    // Important! Always set the container height explicitly
-
-    <MapDiv>{loadMap && renderMap()}</MapDiv>
+    </MapDiv>
   );
 };
 

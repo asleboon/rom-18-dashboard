@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { animated, useSpring } from 'react-spring';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from 'react-router';
 import axios from 'axios'
 import { IPage } from '../../types/Page';
-import { XKCD_URL } from '../../api'
+import { XKCD_URL } from '../../constants/api'
 
-const Container = styled(animated.div)`
+const Container = styled.div`
   display: flex;
   height: 100%;
   width: 100%;
@@ -23,6 +23,7 @@ const Title = styled.p`
   margin-top: 0;
   color: black;
   text-align: center;
+  border-radius: 4px;
 `
 
 const Image = styled.img`
@@ -42,34 +43,42 @@ const Comic: React.FC<IPage> = ({
   seconds,
 }) => {
   const [comic, setComic] = React.useState<IComic>()
+  const [isLoading, setLoading] = React.useState<boolean>(false)
   let history = useHistory();
 
   React.useEffect(() => {
     fetchComic()
   }, [])
 
-  // React.useEffect(() => {
-  //   if (seconds === 100) {
-  //     changePage(history, '/')
-  //   }
-  // }, [seconds])
+  React.useEffect(() => {
+    if (seconds === 100) {
+      changePage(history, '/tegneserie')
+    }
+  }, [seconds])
 
   // use corsanywhere to get comicstrip
   const fetchComic = async () => {
+    setLoading(true)
     let res = await axios.get(XKCD_URL);
-    console.log(res.data)
     setComic(res.data);
+    setLoading(false)
   }
 
   return (
     <>
       {
-        comic && (
-          <Container>
+        !isLoading ? (
+          <Container className="animated fadeInLeft">
             <Title>{comic ? comic.safe_title : ''}</Title>
             <Image src={comic ? comic.img : ''} alt={comic ? comic.alt : ''} />
           </Container>
         )
+          :
+          (
+            <Container>
+              <CircularProgress color="inherit" />
+            </Container>
+          )
       }
     </>
   )
