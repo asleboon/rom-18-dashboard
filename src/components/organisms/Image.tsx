@@ -5,6 +5,12 @@ import { PIXABAY_BASE_URL } from '../../constants/api'
 import { useHistory } from "react-router"
 import { IPage } from '../../types/Page'
 import { CircularProgress } from '@material-ui/core';
+import { QUOTES_API } from './../../constants/api'
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+`
 
 const ImageContainer = styled.div`
   max-height: 100%;
@@ -20,6 +26,25 @@ const Image = styled.img`
   border-radius: 4px;
 `
 
+const QuoteContainer = styled.div`
+  position: absolute;
+  left: 50px;
+  width: 300px;
+  line-height: 40px;
+  word-wrap: break-word;
+`
+
+const Quote = styled.p`
+  font-size: 22px;
+  font-style: italic;
+  font-weight: 700;
+`
+
+const Author = styled.p`
+  font-size: 18px;
+  font-style: italic;
+`
+
 
 const Animal: React.FC<IPage> = ({
   changePage,
@@ -29,9 +54,10 @@ const Animal: React.FC<IPage> = ({
   let history = useHistory();
   const [isLoading, setLoading] = React.useState();
   const [image, setImage] = React.useState();
+  const [quote, setQuote] = React.useState();
 
   React.useEffect(() => {
-    fetchImage();
+    fetchImageAndQuote();
   }, [])
 
   React.useEffect(() => {
@@ -40,26 +66,37 @@ const Animal: React.FC<IPage> = ({
     }
   }, [seconds])
 
-  const fetchImage = async () => {
+  const fetchImageAndQuote = async () => {
     setLoading(true)
     const perPage = 200;
     const searchTerm = 'kitten'
     const randomPage = Math.round((Math.random() * 10))
-    let res = await axios.get(`${PIXABAY_BASE_URL}?key=13807530-1be241224f9cb9953219d6a4d&q=${searchTerm}&order=popular&safesearch=true&per_page=${perPage}&pagi=${randomPage}`);
+    let resImg = await axios.get(`${PIXABAY_BASE_URL}?key=13807530-1be241224f9cb9953219d6a4d&q=${searchTerm}&order=popular&safesearch=true&per_page=${perPage}&pagi=${randomPage}`);
+    let resQuote = await axios.get(`${QUOTES_API}/quotes/random/lang/en`);
     let idx = Math.round((Math.random() * 199))
-    setImage(res.data.hits[idx].webformatURL)
+    setImage(resImg.data.hits[idx].webformatURL)
+    setQuote(resQuote.data)
     setLoading(false)
   }
 
   return (
-    <ImageContainer>
+    <Container>
       {
-        !isLoading ? (
-          <Image className="animated fadeInLeft" src={image} />
-        ) :
+        !isLoading && quote && image ? (
+          <>
+            <ImageContainer className="animated fadeInLeft" >
+              <Image src={image} />
+            </ImageContainer>
+            <QuoteContainer>
+              <Quote>{quote.en}</Quote>
+              <Author>{'- ' + quote.author}</Author>
+            </QuoteContainer>
+          </>
+        )
+          :
           (<CircularProgress color="inherit" />)
       }
-    </ImageContainer>
+    </Container>
   )
 }
 
