@@ -8,19 +8,26 @@ import { XKCD_URL } from '../../api'
 
 const Container = styled(animated.div)`
   display: flex;
+  height: 100%;
+  width: 100%;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 `
 
 const Title = styled.p`
-  font-size: 16px;
-  color: white;
+  font-size: 35px;
+  font-weight: bold;
+  width: 700px;
+  word-wrap: break-word;
+  margin-top: 0;
+  color: black;
+  text-align: center;
 `
 
 const Image = styled.img`
- width: 1000px;
- height: 300px;
+ max-width: 100%;
+ max-height: 100%;
 `
 
 interface IComic {
@@ -41,11 +48,11 @@ const Comic: React.FC<IPage> = ({
     fetchComic()
   }, [])
 
-  React.useEffect(() => {
-    if (seconds === 100) {
-      changePage(history, '/')
-    }
-  }, [seconds])
+  // React.useEffect(() => {
+  //   if (seconds === 100) {
+  //     changePage(history, '/')
+  //   }
+  // }, [seconds])
 
   // use corsanywhere to get comicstrip
   const fetchComic = async () => {
