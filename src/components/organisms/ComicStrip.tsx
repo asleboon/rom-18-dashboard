@@ -23,6 +23,7 @@ const Title = styled.p`
   margin-top: 0;
   color: black;
   text-align: center;
+  border-radius: 4px;
 `
 
 const Image = styled.img`
