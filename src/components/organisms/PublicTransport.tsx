@@ -1,11 +1,10 @@
 import React from 'react';
 import Transport from '../molecules/Transport';
 import styled from 'styled-components';
-import { animated, useSpring } from 'react-spring'
 import { IPage } from '../../types/Page';
 import { useHistory } from 'react-router';
 
-const PublicTransportContainer = styled(animated.div)`
+const PublicTransportContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
@@ -24,16 +23,17 @@ const RealTimeMapContainer = styled.div`
   overflow: hidden;
 `;
 
-const PublicTransport: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
+const PublicTransport: React.FC<IPage> = ({ changePage, seconds }) => {
   let history = useHistory();
-  const animationProps = useSpring({ opacity: 1, from: { opacity: 0 }, config: { duration: 2000 } })
+
   React.useEffect(() => {
     if (seconds === 100) {
       changePage(history, '/kollektiv');
     }
   }, [seconds]);
+
   return (
-    <PublicTransportContainer style={animationProps}>
+    <PublicTransportContainer className="animated fadeInLeft">
       <Transport stopIds={['NSR:StopPlace:27172', 'NSR:StopPlace:362', 'NSR:StopPlace:26919']} />
       <RealTimeMapContainer>
         <RealTimeMap

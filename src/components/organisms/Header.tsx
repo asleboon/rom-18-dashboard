@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { animated, useSpring } from 'react-spring';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment'
 import 'moment/locale/nb'
@@ -9,7 +8,7 @@ interface LinkTextProps {
   isActive: boolean;
 }
 
-const HeaderContainer = styled(animated.div)`
+const HeaderContainer = styled.div`
   height: 65px;
   display: flex;
   justify-content: space-around;
@@ -65,10 +64,14 @@ const Time = styled.p`
   padding-left: 22px;
 `
 
-const Header: React.FC = () => {
-  let currentLocation = window.location.pathname;
-  const headerProps = useSpring({ opacity: 1, from: { opacity: 0 } });
+interface IHeader {
+  resetTimer: () => void;
+}
 
+const Header: React.FC<IHeader> = ({
+  resetTimer
+}) => {
+  let currentLocation = window.location.pathname;
   const decideIfActive = (str: string) => {
     if (str === currentLocation) {
       return true
@@ -76,28 +79,30 @@ const Header: React.FC = () => {
     return false
   }
 
+
+
   return (
-    <HeaderContainer style={headerProps}>
+    <HeaderContainer className="animated fadeIn">
       <ClockContainer>
         <Clock>{moment().format('HH : mm : ss')}</Clock>
         <Time>{moment().format('dddd').toUpperCase()}</Time>
       </ClockContainer>
       <LinkContainer>
         <LinkText>
-          <Link to="/">Bilde</Link>
-          <BorderBottom isActive={decideIfActive('/')} />
+          <Link onClick={resetTimer} to="/">Bilde</Link>
+          <BorderBottom className="animated fadeIn" isActive={decideIfActive('/')} />
         </LinkText>
         <LinkText>
-          <Link to="/kollektiv">Kollektiv</Link>
-          <BorderBottom isActive={decideIfActive('/kollektiv')} />
+          <Link onClick={resetTimer} to="/kollektiv">Kollektiv</Link>
+          <BorderBottom className="animated fadeIn" isActive={decideIfActive('/kollektiv')} />
         </LinkText>
         <LinkText>
-          <Link to="/kart">Kart</Link>
-          <BorderBottom isActive={decideIfActive('/kart')} />
+          <Link onClick={resetTimer} to="/trafikk">Traffik</Link>
+          <BorderBottom className="animated fadeIn" isActive={decideIfActive('/trafikk')} />
         </LinkText>
         <LinkText>
-          <Link to="/tegneserie">xkcd</Link>
-          <BorderBottom isActive={decideIfActive('/tegneserie')} />
+          <Link onClick={resetTimer} to="/tegneserie">Xkcd</Link>
+          <BorderBottom className="animated fadeIn" isActive={decideIfActive('/tegneserie')} />
         </LinkText>
       </LinkContainer>
     </HeaderContainer>
