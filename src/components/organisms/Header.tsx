@@ -34,7 +34,7 @@ const LinkText = styled.p`
   position: relative;
 `;
 
-const BorderBottom = styled.div`
+const BorderBottom = styled.span`
   width: 50px;
   border-bottom: ${(p: LinkTextProps) => p.isActive ? '2px solid white' : 'none'}
   position: absolute;
@@ -95,6 +95,10 @@ const Header: React.FC = () => {
       <LinkText>
         <Link to="/kart">Kart</Link>
         <BorderBottom isActive={decideIfActive('/kart')} />
+      </LinkText>
+      <LinkText>
+        <Link to="/tegneserie">xkcd</Link>
+        <BorderBottom isActive={decideIfActive('/tegneserie')} />
       </LinkText>
     </HeaderContainer>
   );
