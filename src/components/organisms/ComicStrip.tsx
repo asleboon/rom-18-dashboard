@@ -16,7 +16,7 @@ const Container = styled.div`
 `
 
 const Title = styled.p`
-  font-size: 35px;
+  font-size: 32px;
   font-weight: 700;
   width: 700px;
   word-wrap: break-word;
@@ -27,10 +27,11 @@ const Title = styled.p`
 `
 
 const Subtitle = styled.p`
-  margin-top: 20px;
-  font-size: 20px;
-  font-weight: 300;
-  width: 500px;
+  padding-top: 50px;
+  font-size: 18px;
+  font-weight: 200;
+  font-style: italic;
+  width: 700px;
   word-wrap: break-word;
   margin-top: 0;
   color: black;
