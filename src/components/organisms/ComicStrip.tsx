@@ -59,7 +59,11 @@ const Comic: React.FC<IPage> = ({
   // use corsanywhere to get comicstrip
   const fetchComic = async () => {
     setLoading(true)
-    let res = await axios.get(XKCD_URL);
+    let date = new Date;
+    // number between 0-2200 based on the hour of the day
+    // getHours(), between 0 - 24 ?
+    let randomNumber = Math.round((Math.random() * 90) * date.getHours()) // between 0 and 2200
+    let res = await axios.get(`${XKCD_URL}/${randomNumber}/info.0.json`);
     setComic(res.data);
     setLoading(false)
   }
