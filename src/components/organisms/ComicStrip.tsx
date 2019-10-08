@@ -16,8 +16,21 @@ const Container = styled.div`
 `
 
 const Title = styled.p`
-  font-size: 35px;
-  font-weight: bold;
+  font-size: 32px;
+  font-weight: 700;
+  width: 700px;
+  word-wrap: break-word;
+  margin-top: 0;
+  color: black;
+  text-align: center;
+  border-radius: 4px;
+`
+
+const Subtitle = styled.p`
+  padding-top: 50px;
+  font-size: 18px;
+  font-weight: 200;
+  font-style: italic;
   width: 700px;
   word-wrap: break-word;
   margin-top: 0;
@@ -75,6 +88,7 @@ const Comic: React.FC<IPage> = ({
           <Container className="animated fadeInLeft">
             <Title>{comic ? comic.safe_title : ''}</Title>
             <Image src={comic ? comic.img : ''} alt={comic ? comic.alt : ''} />
+            <Subtitle>{comic ? comic.alt : ''}</Subtitle>
           </Container>
         )
           :
