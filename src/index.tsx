@@ -56,7 +56,7 @@ const App: React.FC = () => {
     }
     interval = setInterval(() => {
       setSeconds((seconds: number) => seconds + 1);
-    }, 200);
+    }, 300);
 
     return () => clearInterval(interval);
   }, [isActive, seconds]);
