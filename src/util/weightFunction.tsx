@@ -14,7 +14,7 @@ export const googleMapsWeight = (pages: IPage[], setPage: Function) => {
     beforeTime = moment('14:00:00', format),
     afterTime = moment('18:00:00', format);
   if (time.isBetween(beforeTime, afterTime)) {
-    const newPage = { path: '/kart', weight: 1, isActive: true };
+    const newPage = { path: '/trafikk', weight: 1, isActive: true };
     pages.map((page, index) => {
       if (page.path === newPage.path) {
         pages[index] = newPage;
@@ -22,7 +22,7 @@ export const googleMapsWeight = (pages: IPage[], setPage: Function) => {
     });
     setPage(pages);
   } else {
-    const newPage = { path: '/kart', weight: 1, isActive: false };
+    const newPage = { path: '/trafikk', weight: 1, isActive: false };
     pages.map((page, index) => {
       if (page.path === newPage.path) {
         pages[index] = newPage;

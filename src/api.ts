@@ -1,1 +1,0 @@
-export const PIXABAY_BASE_URL = 'https://cors-anywhere.herokuapp.com/https://pixabay.com/api';
