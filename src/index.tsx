@@ -20,7 +20,6 @@ const AnimatedDonut = styled(CircularProgress)`
   background: transparent;
   border-radius: 50%;
   display: inline-block;
-  z-index: 10;
 `;
 
 const Circle = styled.div`
@@ -56,7 +55,7 @@ const App: React.FC = () => {
     }
     interval = setInterval(() => {
       setSeconds((seconds: number) => seconds + 1);
-    }, 300);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [isActive, seconds]);
@@ -142,10 +141,11 @@ const App: React.FC = () => {
     <ApolloProvider client={client}>
       <Layout>
         <Router>
-          <Circle>
-            <AnimatedDonut color="inherit" value={seconds} variant="static" size="30px" />
-          </Circle>
-          <Header resetTimer={resetTimer} />
+          {/* <Circle>
+            <AnimatedDonut color="primary" value={seconds} variant="static" size="30px" />
+          </Circle> */}
+          {/* <CircularProgress /> */}
+          <Header seconds={seconds} resetTimer={resetTimer} />
           <Switch>
             <Route exact path="/">
               <Animal changePage={changePage} seconds={seconds} pageNumber={1} />

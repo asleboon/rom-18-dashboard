@@ -50,8 +50,9 @@ const sortDataByDate = (allDepartures: IDeparture[]) => {
 
   // sort each item by date
   allDepartures.sort(function (a: IDeparture, b: IDeparture) {
-    return new Date(a.aimedArrivalTime).getTime() - new Date(b.aimedArrivalTime).getTime()
+    return new Date(a.expectedArrivalTime).getTime() - new Date(b.expectedArrivalTime).getTime()
   });
+  console.log(allDepartures)
   return allDepartures
 }
 
