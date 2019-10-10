@@ -10,9 +10,13 @@ import Layout from './components/organisms/Layout';
 import Animal from './components/organisms/Image';
 import Map from './components/organisms/Map';
 import PublicTransport from './components/organisms/PublicTransport';
-import { googleMapsWeight } from './util/weightFunction';
-import './index.css'
-import Comic from './components/organisms/ComicStrip'
+import FagKaffe from './components/molecules/FagKaffe';
+import { googleMapsWeight, fagKaffeReminder } from './util/weightFunction';
+import './index.css';
+import { valueFromAST } from 'graphql';
+import './index.css';
+import Comic from './components/organisms/ComicStrip';
+import Weather from './components/molecules/Weather';
 
 const AnimatedDonut = styled(CircularProgress)`
   height: 25px;
@@ -46,6 +50,7 @@ const App: React.FC = () => {
     { path: '/kollektiv', weight: 1, isActive: true },
     { path: '/trafikk', weight: 1, isActive: true },
     { path: '/tegneserie', weight: 1, isActive: true },
+    { path: '/weather', weight: 1, isActive: true }
   ]);
 
   useEffect(() => {
@@ -114,9 +119,11 @@ const App: React.FC = () => {
   };
 
   const changePage = (history: any, path: string) => {
+    fagKaffeReminder(pages, setPages);
     googleMapsWeight(pages, setPages);
     const newPages = currentlyShowingPages();
     let idx = newPages.findIndex(newPages => newPages.path === path);
+    console.log(newPages);
     if (weightChecker(newPages)) {
       if (idx !== -1) {
         if (idx === newPages.length - 1) {
@@ -156,8 +163,17 @@ const App: React.FC = () => {
             <Route exact path="/trafikk">
               <Map changePage={changePage} seconds={seconds} pageNumber={3} />
             </Route>
+            {
+              //      <Route exact path="/fagKaffe">
+              //<FagKaffe changePage={changePage} seconds={seconds} pageNumber={3} />
+              // </Route>
+            }
+            {/* <Route exact path="/kantine" component={} /> */}
             <Route exact path="/tegneserie">
               <Comic changePage={changePage} seconds={seconds} pageNumber={4} />
+            </Route>
+            <Route exact path="/weather">
+              <Weather changePage={changePage} seconds={seconds} pageNumber={4} />
             </Route>
           </Switch>
         </Router>
