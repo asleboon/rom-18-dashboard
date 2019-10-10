@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import moment from 'moment'
-import 'moment/locale/nb'
+import moment from 'moment';
+import 'moment/locale/nb';
 import { CircularProgress } from '@material-ui/core';
 
 interface LinkTextProps {
@@ -22,7 +22,7 @@ const HeaderContainer = styled.div`
 const LinkContainer = styled.div`
   display: flex;
   justify-content: center;
-`
+`;
 
 const Link = styled(NavLink)`
   font-size: 20px;
@@ -40,12 +40,12 @@ const LinkText = styled.p`
 
 const BorderBottom = styled.span`
   width: 50px;
-  border-bottom: ${(p: LinkTextProps) => p.isActive ? '2px solid black' : 'none'};
+  border-bottom: ${(p: LinkTextProps) => (p.isActive ? '2px solid black' : 'none')};
   position: absolute;
   bottom: -10px;
-  transform: translate(-50%,0);
+  transform: translate(-50%, 0);
   left: 50%;
-`
+`;
 
 const ClockContainer = styled.div`
   display: flex;
@@ -55,16 +55,16 @@ const ClockContainer = styled.div`
   padding-right: auto;
   /* border-radius: 3px; */
   color: black;
-`
+`;
 
 const Clock = styled.p`
   width: 100px;
   padding-left: 22px;
-`
+`;
 const Time = styled.p`
   width: 100px;
   padding-left: 22px;
-`
+`;
 
 const CountDown = styled.p`
   display: flex;
@@ -75,24 +75,21 @@ const CountDown = styled.p`
   position: absolute;
   top: -5px;
   right: 15px;
-`
+`;
 
 interface IHeader {
   resetTimer: () => void;
   seconds: number;
 }
 
-const Header: React.FC<IHeader> = ({
-  resetTimer,
-  seconds
-}) => {
+const Header: React.FC<IHeader> = ({ resetTimer, seconds }) => {
   let currentLocation = window.location.pathname;
   const decideIfActive = (str: string) => {
     if (str === currentLocation) {
-      return true
+      return true;
     }
-    return false
-  }
+    return false;
+  };
 
   return (
     <HeaderContainer className="animated fadeIn">
@@ -101,24 +98,42 @@ const Header: React.FC<IHeader> = ({
       </CountDown>
       <ClockContainer>
         <Clock>{moment().format('HH : mm : ss')}</Clock>
-        <Time>{moment().format('dddd').toUpperCase()}</Time>
+        <Time>
+          {moment()
+            .format('dddd')
+            .toUpperCase()}
+        </Time>
       </ClockContainer>
       <LinkContainer>
         <LinkText>
-          <Link onClick={resetTimer} to="/">Bilde</Link>
+          <Link onClick={resetTimer} to="/">
+            Bilde
+          </Link>
           <BorderBottom className="animated fadeIn" isActive={decideIfActive('/')} />
         </LinkText>
         <LinkText>
-          <Link onClick={resetTimer} to="/kollektiv">Kollektiv</Link>
+          <Link onClick={resetTimer} to="/kollektiv">
+            Kollektiv
+          </Link>
           <BorderBottom className="animated fadeIn" isActive={decideIfActive('/kollektiv')} />
         </LinkText>
         <LinkText>
-          <Link onClick={resetTimer} to="/trafikk">Trafikk</Link>
+          <Link onClick={resetTimer} to="/trafikk">
+            Trafikk
+          </Link>
           <BorderBottom className="animated fadeIn" isActive={decideIfActive('/trafikk')} />
         </LinkText>
         <LinkText>
-          <Link onClick={resetTimer} to="/tegneserie">Xkcd</Link>
+          <Link onClick={resetTimer} to="/tegneserie">
+            Xkcd
+          </Link>
           <BorderBottom className="animated fadeIn" isActive={decideIfActive('/tegneserie')} />
+        </LinkText>
+        <LinkText>
+          <Link onClick={resetTimer} to="/weather">
+            Vær
+          </Link>
+          <BorderBottom className="animated fadeIn" isActive={decideIfActive('/weather')} />
         </LinkText>
       </LinkContainer>
     </HeaderContainer>
