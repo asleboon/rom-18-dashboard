@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/nb';
+import { CircularProgress } from '@material-ui/core';
 
 interface LinkTextProps {
   isActive: boolean;
@@ -15,6 +16,7 @@ const HeaderContainer = styled.div`
   align-items: center;
   background-color: white;
   margin-bottom: 100px;
+  position: relative;
 `;
 
 const LinkContainer = styled.div`
@@ -64,11 +66,23 @@ const Time = styled.p`
   padding-left: 22px;
 `;
 
+const CountDown = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* font-size: 15px; */
+  /* font-weight: 700; */
+  position: absolute;
+  top: -5px;
+  right: 15px;
+`;
+
 interface IHeader {
   resetTimer: () => void;
+  seconds: number;
 }
 
-const Header: React.FC<IHeader> = ({ resetTimer }) => {
+const Header: React.FC<IHeader> = ({ resetTimer, seconds }) => {
   let currentLocation = window.location.pathname;
   const decideIfActive = (str: string) => {
     if (str === currentLocation) {
@@ -79,6 +93,9 @@ const Header: React.FC<IHeader> = ({ resetTimer }) => {
 
   return (
     <HeaderContainer className="animated fadeIn">
+      <CountDown>
+        <CircularProgress variant="static" value={seconds} color="inherit" />
+      </CountDown>
       <ClockContainer>
         <Clock>{moment().format('HH : mm : ss')}</Clock>
         <Time>
@@ -102,7 +119,7 @@ const Header: React.FC<IHeader> = ({ resetTimer }) => {
         </LinkText>
         <LinkText>
           <Link onClick={resetTimer} to="/trafikk">
-            Traffik
+            Trafikk
           </Link>
           <BorderBottom className="animated fadeIn" isActive={decideIfActive('/trafikk')} />
         </LinkText>
