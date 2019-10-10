@@ -114,7 +114,7 @@ const Header: React.FC<IHeader> = ({ resetTimer }) => {
         </LinkText>
         <LinkText>
           <Link onClick={resetTimer} to="/weather">
-            weather
+            Vær
           </Link>
           <BorderBottom className="animated fadeIn" isActive={decideIfActive('/weather')} />
         </LinkText>
