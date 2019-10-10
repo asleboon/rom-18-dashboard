@@ -10,6 +10,7 @@ const MapDiv = styled.div`
   max-width: 100vw;
   display: flex;
   justify-content: center;
+  animation-delay: .5s;
 `;
 const MapCenter = styled.div`
   height: 100%;

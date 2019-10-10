@@ -7,16 +7,20 @@ import { IPage } from '../../types/Page';
 import { XKCD_URL } from '../../constants/api'
 
 const Container = styled.div`
+  margin-top: -50px;
   display: flex;
   height: 100%;
   width: 100%;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  position: relative;
+  animation-delay: .5s;
+  animation-duration: 1s;
 `
 
 const Title = styled.p`
-  font-size: 32px;
+  font-size: 27px;
   font-weight: 700;
   width: 700px;
   word-wrap: break-word;
@@ -27,7 +31,7 @@ const Title = styled.p`
 `
 
 const Subtitle = styled.p`
-  padding-top: 50px;
+  padding-top: 30px;
   font-size: 18px;
   font-weight: 200;
   font-style: italic;
@@ -44,11 +48,37 @@ const Image = styled.img`
  max-height: 100%;
 `
 
-interface IComic {
-  img: string;
+const ExtraInfo = styled.div`
+  display: flex;
+  color: black;
+  justify-content: space-between;
+  margin: 0;
+`
+
+const Number = styled.p`
+  padding: 0.5rem;
+  font-weight: 700;
+`
+
+const Year = styled.p`
+  padding: 0.5rem;
+  background-color: #FF7000;
+  border-radius: 4px;
+`
+
+
+export interface IComic {
+  month: string;
+  num: number;
+  link: string;
+  year: string;
+  news: string;
   safe_title: string;
-  number: number;
+  transcript: string;
   alt: string;
+  img: string;
+  title: string;
+  day: string;
 }
 
 const Comic: React.FC<IPage> = ({
@@ -72,11 +102,7 @@ const Comic: React.FC<IPage> = ({
   // use corsanywhere to get comicstrip
   const fetchComic = async () => {
     setLoading(true)
-    let date = new Date;
-    // number between 0-2200 based on the hour of the day
-    // getHours(), between 0 - 24 ?
-    let randomNumber = Math.round((Math.random() * 90) * date.getHours()) // between 0 and 2200
-    let res = await axios.get(`${XKCD_URL}/${randomNumber}/info.0.json`);
+    let res = await axios.get(`${XKCD_URL}`);
     setComic(res.data);
     setLoading(false)
   }
@@ -84,9 +110,13 @@ const Comic: React.FC<IPage> = ({
   return (
     <>
       {
-        !isLoading ? (
+        !isLoading && comic ? (
           <Container className="animated fadeInLeft">
             <Title>{comic ? comic.safe_title : ''}</Title>
+            <ExtraInfo>
+              <Number>{comic ? `#${comic.num}` : ''}</Number>
+              <Year>{comic ? comic.year : ''}</Year>
+            </ExtraInfo>
             <Image src={comic ? comic.img : ''} alt={comic ? comic.alt : ''} />
             <Subtitle>{comic ? comic.alt : ''}</Subtitle>
           </Container>

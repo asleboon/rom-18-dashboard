@@ -18,6 +18,7 @@ const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  animation-delay: .5s;
 `
 
 const Image = styled.img`
