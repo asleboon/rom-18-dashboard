@@ -18,6 +18,7 @@ const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  animation-delay: .5s;
 `;
 
 const Image = styled.img`
@@ -90,8 +91,8 @@ const Animal: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
           </QuoteContainer>
         </>
       ) : (
-        <CircularProgress color="inherit" />
-      )}
+          <CircularProgress color="inherit" />
+        )}
     </Container>
   );
 };

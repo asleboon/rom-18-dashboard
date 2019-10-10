@@ -17,6 +17,7 @@ const HeaderContainer = styled.div`
   background-color: white;
   margin-bottom: 100px;
   position: relative;
+  animation-delay: .5s;
 `;
 
 const LinkContainer = styled.div`
@@ -45,6 +46,7 @@ const BorderBottom = styled.span`
   bottom: -10px;
   transform: translate(-50%, 0);
   left: 50%;
+  animation-delay: .5s;
 `;
 
 const ClockContainer = styled.div`
