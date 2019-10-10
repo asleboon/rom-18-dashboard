@@ -1,0 +1,118 @@
+import React from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
+import { History } from 'history';
+import { animated, useSpring } from 'react-spring';
+import moment, { Moment, weekdays } from 'moment';
+import { useHistory } from 'react-router';
+import { IPage } from '../../types/Page';
+import { getDynamicStyles } from 'jss';
+const ImageContainer = styled.div`
+  max-height: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: Row;
+  justify-content: center;
+  align-items: center;
+`;
+const DailyCotainer = styled.div`
+  height: 200px;
+  width: 200px;
+  border: solid;
+  border-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: pink;
+`;
+const CurrentWeatherText = styled.p`
+  display: flex;
+`;
+const Image = styled.img`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+//http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID={APIKEY}
+//openweathermap.org/data/2.5/forecast?id=6453391&appid=c6e8619eea5061ea18d709d19ecd3525
+//api.openweathermap.org/data/2.5/forecast?id=6453391&mode=json&APPID=6453391&appid=c6e8619eea5061ea18d709d19ecd3525
+const Weather: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
+  const [image, setImage] = React.useState();
+  const [futureImage, setFutureImage] = React.useState();
+  const [imageDayOne, setImageDayOne] = React.useState();
+  const [currentWeather, setCurrentWeather] = React.useState();
+  const [futureWeather, setFutureWeather]: any = React.useState([]);
+  let history = useHistory();
+  React.useEffect(() => {
+    fetchWeather();
+  }, []);
+  const fetchWeather = async () => {
+    let currentWeather: any = await axios.get(
+      `https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/weather?id=6453391&units=metric&appid=c6e8619eea5061ea18d709d19ecd3525`
+    );
+    setCurrentWeather(currentWeather);
+    // console.log(currentWeather.data);
+    setImage(`http://openweathermap.org/img/wn/${currentWeather.data.weather[0].icon}@2x.png`);
+    let futureWeather: any = await axios
+      .get(
+        `https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/forecast?id=6453391&units=metric&appid=c6e8619eea5061ea18d709d19ecd3525`
+      )
+      .then(weather => {
+        let counter = 0;
+        const weatherList: any = [];
+        const images: string[] = [];
+        weather.data.list.map((weatherDays: any) => {
+          const time = weatherDays.dt_txt.split(' ')[1];
+          if (time === '15:00:00') {
+            weatherList.push(weatherDays);
+            images.push(`http://openweathermap.org/img/wn/${weatherDays.weather[0].icon}@2x.png`);
+          }
+        });
+        setFutureWeather(weatherList);
+        setFutureImage(images);
+      });
+
+    // console.log(futureWeather);
+  };
+
+  React.useEffect(() => {
+    if (seconds === 100) {
+      changePage(history, '/weather');
+    }
+  }, [seconds]);
+  const getDay = (index: number) => {
+    const week = ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag', 'Søndag'];
+    const day = moment(new Date())
+      .add(index + 1, 'days')
+      .weekday();
+    return week[day];
+  };
+  return (
+    <ImageContainer>
+      <DailyCotainer>
+        <CurrentWeatherText>I dag</CurrentWeatherText>
+        <Image src={image} />
+        <CurrentWeatherText>
+          {currentWeather && Math.round(currentWeather.data.main.temp_min)}/
+          {Math.round(currentWeather && currentWeather.data.main.temp_max)}
+        </CurrentWeatherText>
+      </DailyCotainer>
+      {futureWeather &&
+        futureWeather.map((weather: any, index: number) => {
+          return (
+            <DailyCotainer>
+              <CurrentWeatherText>{getDay(index)}</CurrentWeatherText>
+              <Image src={futureImage && futureImage[index] && futureImage[index]} />
+              <CurrentWeatherText>
+                {futureWeather[index] && futureWeather[index].main && Math.round(futureWeather[index].main.temp_min)}/
+                {futureWeather[index] && futureWeather[index].main && Math.round(futureWeather[index].main.temp_max)}
+              </CurrentWeatherText>
+            </DailyCotainer>
+          );
+        })}
+    </ImageContainer>
+  );
+};
+
+export default Weather;

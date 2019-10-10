@@ -1,14 +1,14 @@
-import React from 'react'
+import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { STOP_PLACE_QUERY } from './../../graphql/query';
 import styled from 'styled-components';
-import { IStopPlace, IEstimatedCall } from './../../types/Transport'
-import TransportRow from './TransportRow'
+import { IStopPlace, IEstimatedCall } from './../../types/Transport';
+import TransportRow from './TransportRow';
 
 const TransportTableContainer = styled.div`
   display: flex;
   flex-direction: column;
-`
+`;
 
 const TransportTable = styled.div`
   display: flex;
@@ -16,7 +16,7 @@ const TransportTable = styled.div`
   margin: 0 10px;
   border: 1px solid #afafaf;
   border-radius: 4px;
-`
+`;
 
 export interface IDeparture extends IEstimatedCall {
   departurePlace: string;
@@ -27,7 +27,7 @@ interface ITransport {
 }
 
 /**
- * Input a list of stopplaces and return an arrray of 
+ * Input a list of stopplaces and return an arrray of
  * departures
  * @param stopPlaces
  */
@@ -36,25 +36,23 @@ const refineData = (stopPlaces: IStopPlace[]) => {
   stopPlaces.forEach((stops: IStopPlace) => {
     stops.estimatedCalls.forEach((call: IEstimatedCall) => {
       // add departure place on each departure
-      allDepartures.push({ ...call, departurePlace: stops.name })
-    })
-  })
-  return allDepartures
-}
+      allDepartures.push({ ...call, departurePlace: stops.name });
+    });
+  });
+  return allDepartures;
+};
 
 /**
- * 
- * @param stopPlaces 
+ *
+ * @param stopPlaces
  */
 const sortDataByDate = (allDepartures: IDeparture[]) => {
-
   // sort each item by date
-  allDepartures.sort(function (a: IDeparture, b: IDeparture) {
-    return new Date(a.aimedArrivalTime).getTime() - new Date(b.aimedArrivalTime).getTime()
+  allDepartures.sort(function(a: IDeparture, b: IDeparture) {
+    return new Date(a.aimedArrivalTime).getTime() - new Date(b.aimedArrivalTime).getTime();
   });
-  return allDepartures
-}
-
+  return allDepartures;
+};
 
 /**
  * returns a list with two lists -> [bus, train]
@@ -71,32 +69,29 @@ const sortByTransportType = (allDepartures: IDeparture[]) => {
     } else {
       trains.push(departure);
     }
-  })
+  });
 
-  return [buses, trains]
-}
+  return [buses, trains];
+};
 
-
-const Transport: React.FC<ITransport> = ({
-  stopIds,
-}) => {
+const Transport: React.FC<ITransport> = ({ stopIds }) => {
   const [stopPlaces, setStopPlaces] = React.useState([]);
   const [busDepartues, setBusDepartures] = React.useState();
   const [trainDepartures, setTrainDepartures] = React.useState();
 
   React.useEffect(() => {
     refineAndSortDepartures();
-  }, [stopPlaces])
+  }, [stopPlaces]);
 
   const refineAndSortDepartures = async () => {
     if (stopPlaces.length > 0) {
       let data = await refineData(stopPlaces);
       let sortedByDate = await sortDataByDate(data);
       let sortedByType = await sortByTransportType(sortedByDate);
-      setBusDepartures(sortedByType[0])
-      setTrainDepartures(sortedByType[1])
+      setBusDepartures(sortedByType[0]);
+      setTrainDepartures(sortedByType[1]);
     }
-  }
+  };
 
   const { loading, error, data } = useQuery(STOP_PLACE_QUERY, {
     variables: { stopIds, n: 3 }
@@ -124,9 +119,8 @@ const Transport: React.FC<ITransport> = ({
                 serviceJourney={departure.serviceJourney}
                 quay={departure.quay}
               />
-            )
-          }
-          )}
+            );
+          })}
       </TransportTable>
       <TransportTable style={{ marginTop: 4 }}>
         {trainDepartures &&
@@ -142,12 +136,11 @@ const Transport: React.FC<ITransport> = ({
                 serviceJourney={departure.serviceJourney}
                 quay={departure.quay}
               />
-            )
-          }
-          )}
+            );
+          })}
       </TransportTable>
     </TransportTableContainer>
-  )
-}
+  );
+};
 
-export default Transport
+export default Transport;

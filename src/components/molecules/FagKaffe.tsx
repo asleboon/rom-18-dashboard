@@ -3,7 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { History } from 'history';
 import { animated, useSpring } from 'react-spring';
-import { PIXABAY_BASE_URL } from './../../api';
+
 import { useHistory } from 'react-router';
 import { IPage } from '../../types/Page';
 

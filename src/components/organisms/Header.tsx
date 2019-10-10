@@ -112,6 +112,12 @@ const Header: React.FC<IHeader> = ({ resetTimer }) => {
           </Link>
           <BorderBottom className="animated fadeIn" isActive={decideIfActive('/tegneserie')} />
         </LinkText>
+        <LinkText>
+          <Link onClick={resetTimer} to="/weather">
+            weather
+          </Link>
+          <BorderBottom className="animated fadeIn" isActive={decideIfActive('/weather')} />
+        </LinkText>
       </LinkContainer>
     </HeaderContainer>
   );
