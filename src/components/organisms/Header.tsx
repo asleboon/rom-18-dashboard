@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment';
@@ -17,7 +17,7 @@ const HeaderContainer = styled.div`
   background-color: white;
   margin-bottom: 100px;
   position: relative;
-  animation-delay: .5s;
+  animation-delay: 0.5s;
 `;
 
 const LinkContainer = styled.div`
@@ -46,7 +46,7 @@ const BorderBottom = styled.span`
   bottom: -10px;
   transform: translate(-50%, 0);
   left: 50%;
-  animation-delay: .5s;
+  animation-delay: 0.5s;
 `;
 
 const ClockContainer = styled.div`
@@ -68,14 +68,14 @@ const Time = styled.p`
   padding-left: 22px;
 `;
 
-const CountDown = styled.p`
+const CountDown = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   /* font-size: 15px; */
   /* font-weight: 700; */
   position: absolute;
-  top: -5px;
+  top: 5px;
   right: 15px;
 `;
 

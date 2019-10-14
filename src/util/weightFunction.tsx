@@ -34,7 +34,6 @@ export const googleMapsWeight = (pages: IPage[], setPage: Function) => {
 
 export const fagKaffeReminder = (pages: IPage[], setPage: Function) => {
   const time = moment();
-  console.log(time);
   if (time.week() % 2 !== 0) {
     if (time.day() === 5)
       if (time.hour() === 11) {
