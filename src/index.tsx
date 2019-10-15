@@ -123,7 +123,6 @@ const App: React.FC = () => {
     googleMapsWeight(pages, setPages);
     const newPages = currentlyShowingPages();
     let idx = newPages.findIndex(newPages => newPages.path === path);
-    console.log(newPages);
     if (weightChecker(newPages)) {
       if (idx !== -1) {
         if (idx === newPages.length - 1) {
