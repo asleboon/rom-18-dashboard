@@ -18,7 +18,7 @@ const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  animation-delay: .5s;
+  animation-delay: 0.5s;
 `;
 
 const Image = styled.img`
@@ -72,7 +72,6 @@ const Animal: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
     );
     let resQuote = await axios.get(`${QUOTES_API}/quotes/random/lang/en`);
     let idx = Math.round(Math.random() * 199);
-    console.log(resImg);
     setImage(resImg.data.hits[idx].webformatURL);
     setQuote(resQuote.data);
     setLoading(false);
@@ -91,8 +90,8 @@ const Animal: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
           </QuoteContainer>
         </>
       ) : (
-          <CircularProgress color="inherit" />
-        )}
+        <CircularProgress color="inherit" />
+      )}
     </Container>
   );
 };

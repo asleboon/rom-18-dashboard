@@ -27,7 +27,7 @@ const DailyCotainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: #cccccc;
+  background-color: pink;
 `;
 const CurrentWeatherText = styled.p`
   display: flex;
