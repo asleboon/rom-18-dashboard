@@ -72,7 +72,6 @@ const Animal: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
     );
     let resQuote = await axios.get(`${QUOTES_API}/quotes/random/lang/en`);
     let idx = Math.round(Math.random() * 199);
-    console.log(resImg);
     setImage(resImg.data.hits[idx].webformatURL);
     setQuote(resQuote.data);
     setLoading(false);

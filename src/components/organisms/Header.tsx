@@ -68,7 +68,7 @@ const Time = styled.p`
   padding-left: 22px;
 `;
 
-const CountDown = styled.p`
+const CountDown = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -136,6 +136,12 @@ const Header: React.FC<IHeader> = ({ resetTimer, seconds }) => {
             Vær
           </Link>
           <BorderBottom className="animated fadeIn" isActive={decideIfActive('/weather')} />
+        </LinkText>
+        <LinkText>
+          <Link onClick={resetTimer} to="/temp">
+            Temperatur
+          </Link>
+          <BorderBottom className="animated fadeIn" isActive={decideIfActive('/temp')} />
         </LinkText>
       </LinkContainer>
     </HeaderContainer>
