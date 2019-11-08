@@ -17,6 +17,7 @@ import { valueFromAST } from 'graphql';
 import './index.css';
 import Comic from './components/organisms/ComicStrip';
 import Weather from './components/molecules/Weather';
+import Temperature from './components/organisms/Temperature'
 
 const AnimatedDonut = styled(CircularProgress)`
   height: 25px;
@@ -50,7 +51,8 @@ const App: React.FC = () => {
     { path: '/kollektiv', weight: 1, isActive: true },
     { path: '/trafikk', weight: 1, isActive: true },
     { path: '/tegneserie', weight: 1, isActive: true },
-    { path: '/weather', weight: 1, isActive: true }
+    { path: '/weather', weight: 1, isActive: true },
+    { path: '/temp', weight: 1, isActive: true },
   ]);
 
   useEffect(() => {
@@ -147,10 +149,6 @@ const App: React.FC = () => {
     <ApolloProvider client={client}>
       <Layout>
         <Router>
-          {/* <Circle>
-            <AnimatedDonut color="primary" value={seconds} variant="static" size="30px" />
-          </Circle> */}
-          {/* <CircularProgress /> */}
           <Header seconds={seconds} resetTimer={resetTimer} />
           <Switch>
             <Route exact path="/">
@@ -172,7 +170,10 @@ const App: React.FC = () => {
               <Comic changePage={changePage} seconds={seconds} pageNumber={4} />
             </Route>
             <Route exact path="/weather">
-              <Weather changePage={changePage} seconds={seconds} pageNumber={4} />
+              <Weather changePage={changePage} seconds={seconds} pageNumber={5} />
+            </Route>
+            <Route exact path="/temp">
+              <Temperature changePage={changePage} seconds={seconds} pageNumber={6} />
             </Route>
           </Switch>
         </Router>

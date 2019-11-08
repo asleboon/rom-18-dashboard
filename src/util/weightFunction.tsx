@@ -2,7 +2,7 @@ import { Page } from '../types/Page';
 import moment from 'moment';
 const Pages: Page[] = [{ pageId: 1, isActive: true, weight: 100 }];
 
-export const Weight = () => {};
+export const Weight = () => { };
 interface IPage {
   path: string;
   weight: number;
