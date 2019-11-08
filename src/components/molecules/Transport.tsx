@@ -4,6 +4,7 @@ import { STOP_PLACE_QUERY } from './../../graphql/query';
 import styled from 'styled-components';
 import { IStopPlace, IEstimatedCall } from './../../types/Transport';
 import TransportRow from './TransportRow';
+import moment, { Moment } from 'moment';
 
 const TransportTableContainer = styled.div`
   display: flex;
@@ -49,7 +50,13 @@ const refineData = (stopPlaces: IStopPlace[]) => {
 const sortDataByDate = (allDepartures: IDeparture[]) => {
   // sort each item by date
   allDepartures.sort(function(a: IDeparture, b: IDeparture) {
-    return new Date(a.expectedArrivalTime).getTime() - new Date(b.expectedArrivalTime).getTime();
+    console.log(moment(a.expectedArrivalTime).isBefore(moment(b.expectedArrivalTime)));
+    const timeCheck = moment(a.expectedArrivalTime).isBefore(moment(b.expectedArrivalTime));
+    if (!timeCheck) {
+      return 1;
+    } else {
+      return -1;
+    }
   });
   return allDepartures;
 };
