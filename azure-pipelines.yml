@@ -27,6 +27,17 @@ steps:
     command: 'custom'
     customCommand: 'run build'
 
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: '$(System.DefaultWorkingDirectory)'
+    contents: 'web.config' 
+    targetFolder: '$(System.DefaultWorkingDirectory)/build'
+    #cleanTargetFolder: false # Optional
+    #overWrite: false # Optional
+    #flattenFolders: false # Optional
+    #preserveTimestamp: false # Optional
+  displayName: 'Copy web.config into build'
+
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
@@ -34,3 +45,4 @@ steps:
     appType: 'webAppLinux'
     WebAppName: 'dashboard18'
     packageForLinux: '$(System.DefaultWorkingDirectory)/build'
+
