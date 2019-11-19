@@ -52,7 +52,6 @@ const App: React.FC = () => {
     { path: '/trafikk', weight: 1, isActive: true },
     { path: '/tegneserie', weight: 1, isActive: true },
     { path: '/weather', weight: 1, isActive: true },
-    { path: '/temp', weight: 1, isActive: true },
   ]);
 
   useEffect(() => {
