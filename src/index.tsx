@@ -172,9 +172,6 @@ const App: React.FC = () => {
             <Route exact path="/weather">
               <Weather changePage={changePage} seconds={seconds} pageNumber={5} />
             </Route>
-            <Route exact path="/temp">
-              <Temperature changePage={changePage} seconds={seconds} pageNumber={6} />
-            </Route>
           </Switch>
         </Router>
       </Layout>
