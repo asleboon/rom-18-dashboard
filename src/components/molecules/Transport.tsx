@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { STOP_PLACE_QUERY } from './../../graphql/query';
 import styled from 'styled-components';
@@ -49,8 +49,7 @@ const refineData = (stopPlaces: IStopPlace[]) => {
  */
 const sortDataByDate = (allDepartures: IDeparture[]) => {
   // sort each item by date
-  allDepartures.sort(function(a: IDeparture, b: IDeparture) {
-    console.log(moment(a.expectedArrivalTime).isBefore(moment(b.expectedArrivalTime)));
+  allDepartures.sort(function (a: IDeparture, b: IDeparture) {
     const timeCheck = moment(a.expectedArrivalTime).isBefore(moment(b.expectedArrivalTime));
     if (!timeCheck) {
       return 1;
@@ -82,33 +81,26 @@ const sortByTransportType = (allDepartures: IDeparture[]) => {
 };
 
 const Transport: React.FC<ITransport> = ({ stopIds }) => {
-  const [stopPlaces, setStopPlaces] = React.useState([]);
   const [busDepartues, setBusDepartures] = React.useState();
   const [trainDepartures, setTrainDepartures] = React.useState();
 
-  React.useEffect(() => {
-    refineAndSortDepartures();
-  }, [stopPlaces]);
-
-  const refineAndSortDepartures = async () => {
-    if (stopPlaces.length > 0) {
-      let data = await refineData(stopPlaces);
-      let sortedByDate = await sortDataByDate(data);
-      let sortedByType = await sortByTransportType(sortedByDate);
-      setBusDepartures(sortedByType[0]);
-      setTrainDepartures(sortedByType[1]);
-    }
-  };
-
   const { loading, error, data } = useQuery(STOP_PLACE_QUERY, {
-    variables: { stopIds, n: 3 }
+    variables: { stopIds, n: 3 },
+    pollInterval: 6000,
   });
+
+  useEffect(() => {
+    if (data) {
+      const refinedData = refineData(data.stopPlaces)
+      const sortedByDate = sortDataByDate(refinedData);
+      const sortedByType = sortByTransportType(sortedByDate);
+      setBusDepartures(sortedByType[0])
+      setTrainDepartures(sortedByType[1])
+    }
+  }, [data])
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :/ </p>;
-  if (data && stopPlaces.length <= 0) {
-    setStopPlaces(data.stopPlaces);
-  }
 
   return (
     <TransportTableContainer>
