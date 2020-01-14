@@ -37,7 +37,7 @@ interface Day {
 
 const Cantina: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
   const [menu, setMenu] = React.useState<IMenu>()
-  let history = useHistory();
+  const history = useHistory();
 
   React.useEffect(() => {
     fetchMenu();
@@ -52,15 +52,15 @@ const Cantina: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
     if (seconds === 100) {
       changePage(history, '/weather');
     }
-  }, [seconds]);
+  }, [seconds, changePage, history]);
 
   return(
     <Container>
       {menu && menu.days.map((entry: Day, index: number) => (
         <MenuEntry key={entry.day} currentDay={index+1 === moment().day()}>
           <h1>{entry.day}</h1>
-          {entry.dishes.map((dish): any => (
-            <p>{dish}</p>
+          {entry.dishes.map((dish: any, index: number) => (
+            <p key={index}>{dish}</p>
           ))}
         </MenuEntry>
         )
