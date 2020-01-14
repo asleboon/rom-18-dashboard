@@ -4,7 +4,7 @@ import { STOP_PLACE_QUERY } from './../../graphql/query';
 import styled from 'styled-components';
 import { IStopPlace, IEstimatedCall } from './../../types/Transport';
 import TransportRow from './TransportRow';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 
 const TransportTableContainer = styled.div`
   display: flex;
