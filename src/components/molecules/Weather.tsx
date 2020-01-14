@@ -1,13 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import { History } from 'history';
-import { animated, useSpring } from 'react-spring';
-import moment, { Moment, weekdays } from 'moment';
+import moment from 'moment';
 import { useHistory } from 'react-router';
 import { CircularProgress } from '@material-ui/core';
 import { IPage } from '../../types/Page';
-import { getDynamicStyles } from 'jss';
 
 const ImageContainer = styled.div`
   margin-top: 10%;
@@ -54,23 +51,20 @@ const Weather: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
     );
     setCurrentWeather(currentWeather);
     setImage(`http://openweathermap.org/img/wn/${currentWeather.data.weather[0].icon}@2x.png`);
-    let futureWeather: any = await axios
+    await axios
       .get(
         `https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/forecast?id=6453391&units=metric&appid=c6e8619eea5061ea18d709d19ecd3525`
       )
       .then(weather => {
-        let counter = 0;
         const weatherList: any = [];
         const images: string[] = [];
-        weather.data.list.map((weatherDays: any) => {
+        weather.data.list.forEach((weatherDays: any) => {
           const time = weatherDays.dt_txt.split(' ')[1];
           if (time === '15:00:00') {
             weatherList.push(weatherDays);
             if (weatherDays.weather[0].icon) {
               images.push(`http://openweathermap.org/img/wn/${weatherDays.weather[0].icon}@2x.png`);
             }
-
-            counter += 1;
           }
         });
         setFutureWeather(weatherList);
