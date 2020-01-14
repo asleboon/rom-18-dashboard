@@ -1,38 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import styled from 'styled-components';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { client } from './graphql/client';
 import Header from './components/organisms/Header';
 import Layout from './components/organisms/Layout';
 import Animal from './components/organisms/Image';
 import Map from './components/organisms/Map';
 import PublicTransport from './components/organisms/PublicTransport';
-import FagKaffe from './components/molecules/FagKaffe';
 import { googleMapsWeight, fagKaffeReminder, cantinaWeight } from './util/weightFunction';
-import './index.css';
-import { valueFromAST } from 'graphql';
 import './index.css';
 import Comic from './components/organisms/ComicStrip';
 import Weather from './components/molecules/Weather';
-import Temperature from './components/organisms/Temperature'
 import Cantina from './components/molecules/Cantina';
-
-const AnimatedDonut = styled(CircularProgress)`
-  height: 25px;
-  width: 25px;
-  background: transparent;
-  border-radius: 50%;
-  display: inline-block;
-`;
-
-const Circle = styled.div`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-`;
 
 interface IPage {
   path: string;
@@ -74,13 +54,13 @@ const App: React.FC = () => {
 
   const nextPageCalculations = (newPages: IPage[]) => {
     let currentTotalWeight = 0;
-    newPages.map(page => {
+    newPages.forEach(page => {
       currentTotalWeight += page.weight;
     });
     const nextPage = Math.round(Math.random() * currentTotalWeight);
     let tempWeight = 0;
     let showPage: IPage = { path: '', weight: 0, isActive: false };
-    newPages.map(page => {
+    newPages.forEach(page => {
       const currWeight = tempWeight;
       tempWeight += page.weight;
 
@@ -99,7 +79,7 @@ const App: React.FC = () => {
   const weightChecker = (newPages: IPage[]) => {
     let weight = 0;
     let value = true;
-    newPages.map((page, index) => {
+    newPages.forEach((page, index) => {
       if (index === 0) {
         weight = page.weight;
       } else if (page.weight === weight || page.isActive === false) {
@@ -113,7 +93,7 @@ const App: React.FC = () => {
 
   const currentlyShowingPages = () => {
     let showingPages: IPage[] = [];
-    pages.map((page: IPage) => {
+    pages.forEach((page: IPage) => {
       if (page.isActive) {
         showingPages.push(page);
       }
