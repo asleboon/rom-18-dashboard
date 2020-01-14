@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { IDeparture } from './Transport';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 import { IoIosBus, IoIosTrain } from 'react-icons/io';
 
 const Container = styled.div`
@@ -53,21 +53,21 @@ const TransportRow: React.FC<IDeparture> = ({
   quay
 }) => {
   const [nextDeparture, setNextDeparture] = useState();
-  useEffect(() => {
-    let formatedTime = formatTime(expectedArrivalTime);
-    setNextDeparture(formatedTime);
-  }, [expectedArrivalTime]);
 
-  const formatTime = (timeString: string) => {
-    // let delayed = Math.abs((+new Date(aimedArrivalTime)) - (+new Date(expectedArrivalTime)))
+  useEffect(() => {
+    let formatedTime: string;
     let untilArrival = Math.abs(+new Date(expectedArrivalTime) - Date.now());
     let untilArrivalString = moment(untilArrival).format('m');
 
     if (untilArrivalString === '0') {
-      return 'Nå';
-    }
-    return `${untilArrivalString} minutt`;
-  };
+      formatedTime = 'Nå';
+    } else {
+      formatedTime = `${untilArrivalString} minutt`;
+    } 
+
+    setNextDeparture(formatedTime);
+  }, [expectedArrivalTime]);
+
   const transportMode = serviceJourney.journeyPattern.line.transportMode;
   return (
     <Container>
