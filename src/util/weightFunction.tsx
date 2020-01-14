@@ -8,6 +8,30 @@ interface IPage {
   weight: number;
   isActive: boolean;
 }
+
+export const cantinaWeight = (pages: IPage[], setPage: Function) => {
+  const format: string = 'hh:mm:ss';
+  const time = moment(), beforeTime = moment('10:00:00', format), afterTime = moment('12:00:00', format);
+
+  if (time.isBetween(beforeTime, afterTime)) {
+    const newPage = { path: '/cantina', weight: 1, isActive: true };
+    pages.forEach((page, index) => {
+      if (page.path === newPage.path) {
+        pages[index] = newPage;
+      }
+    });
+    setPage(pages);
+  } else {
+    const newPage = { path: '/cantina', weight: 1, isActive: false };
+    pages.forEach((page, index) => {
+      if (page.path === newPage.path) {
+        pages[index] = newPage;
+      }
+    });
+    setPage(pages);
+  }
+};
+
 export const googleMapsWeight = (pages: IPage[], setPage: Function) => {
   const format: string = 'hh:mm:ss';
   const time = moment(),
