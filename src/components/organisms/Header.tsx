@@ -137,6 +137,12 @@ const Header: React.FC<IHeader> = ({ resetTimer, seconds }) => {
           </Link>
           <BorderBottom className="animated fadeIn" isActive={decideIfActive('/weather')} />
         </LinkText>
+        <LinkText>
+          <Link onClick={resetTimer} to="/cantina">
+            Kantine
+          </Link>
+          <BorderBottom className="animated fadeIn" isActive={decideIfActive('/cantina')} />
+        </LinkText>
       </LinkContainer>
     </HeaderContainer>
   );

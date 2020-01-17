@@ -8,6 +8,30 @@ interface IPage {
   weight: number;
   isActive: boolean;
 }
+
+export const cantinaWeight = (pages: IPage[], setPage: Function) => {
+  const format: string = 'hh:mm:ss';
+  const time = moment(), beforeTime = moment('10:00:00', format), afterTime = moment('12:00:00', format);
+
+  if (time.isBetween(beforeTime, afterTime)) {
+    const newPage = { path: '/cantina', weight: 1, isActive: true };
+    pages.forEach((page, index) => {
+      if (page.path === newPage.path) {
+        pages[index] = newPage;
+      }
+    });
+    setPage(pages);
+  } else {
+    const newPage = { path: '/cantina', weight: 1, isActive: false };
+    pages.forEach((page, index) => {
+      if (page.path === newPage.path) {
+        pages[index] = newPage;
+      }
+    });
+    setPage(pages);
+  }
+};
+
 export const googleMapsWeight = (pages: IPage[], setPage: Function) => {
   const format: string = 'hh:mm:ss';
   const time = moment(),
@@ -15,7 +39,7 @@ export const googleMapsWeight = (pages: IPage[], setPage: Function) => {
     afterTime = moment('18:00:00', format);
   if (time.isBetween(beforeTime, afterTime)) {
     const newPage = { path: '/trafikk', weight: 1, isActive: true };
-    pages.map((page, index) => {
+    pages.forEach((page, index) => {
       if (page.path === newPage.path) {
         pages[index] = newPage;
       }
@@ -23,7 +47,7 @@ export const googleMapsWeight = (pages: IPage[], setPage: Function) => {
     setPage(pages);
   } else {
     const newPage = { path: '/trafikk', weight: 1, isActive: false };
-    pages.map((page, index) => {
+    pages.forEach((page, index) => {
       if (page.path === newPage.path) {
         pages[index] = newPage;
       }
@@ -39,7 +63,7 @@ export const fagKaffeReminder = (pages: IPage[], setPage: Function) => {
       if (time.hour() === 11) {
         if (time.minute() < 60 && time.minute() > 45) {
           const newPage = { path: '/fagKaffe', weight: 2, isActive: true };
-          pages.map((page, index) => {
+          pages.forEach((page, index) => {
             if (page.path === newPage.path) {
               pages[index] = newPage;
             }

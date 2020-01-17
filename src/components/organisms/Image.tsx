@@ -60,7 +60,7 @@ const Animal: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
     if (seconds === 100) {
       changePage(history, '/');
     }
-  }, [seconds]);
+  }, [seconds, changePage, history]);
 
   const fetchImageAndQuote = async () => {
     setLoading(true);

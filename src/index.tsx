@@ -1,37 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import styled from 'styled-components';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { client } from './graphql/client';
 import Header from './components/organisms/Header';
 import Layout from './components/organisms/Layout';
 import Animal from './components/organisms/Image';
 import Map from './components/organisms/Map';
 import PublicTransport from './components/organisms/PublicTransport';
-import FagKaffe from './components/molecules/FagKaffe';
-import { googleMapsWeight, fagKaffeReminder } from './util/weightFunction';
-import './index.css';
-import { valueFromAST } from 'graphql';
+import { googleMapsWeight, fagKaffeReminder, cantinaWeight } from './util/weightFunction';
 import './index.css';
 import Comic from './components/organisms/ComicStrip';
 import Weather from './components/molecules/Weather';
-import Temperature from './components/organisms/Temperature'
-
-const AnimatedDonut = styled(CircularProgress)`
-  height: 25px;
-  width: 25px;
-  background: transparent;
-  border-radius: 50%;
-  display: inline-block;
-`;
-
-const Circle = styled.div`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-`;
+import Cantina from './components/molecules/Cantina';
 
 interface IPage {
   path: string;
@@ -52,6 +33,7 @@ const App: React.FC = () => {
     { path: '/trafikk', weight: 1, isActive: true },
     { path: '/tegneserie', weight: 1, isActive: true },
     { path: '/weather', weight: 1, isActive: true },
+    { path: '/cantina', weight: 1, isActive: true }
   ]);
 
   useEffect(() => {
@@ -72,13 +54,13 @@ const App: React.FC = () => {
 
   const nextPageCalculations = (newPages: IPage[]) => {
     let currentTotalWeight = 0;
-    newPages.map(page => {
+    newPages.forEach(page => {
       currentTotalWeight += page.weight;
     });
     const nextPage = Math.round(Math.random() * currentTotalWeight);
     let tempWeight = 0;
     let showPage: IPage = { path: '', weight: 0, isActive: false };
-    newPages.map(page => {
+    newPages.forEach(page => {
       const currWeight = tempWeight;
       tempWeight += page.weight;
 
@@ -97,7 +79,7 @@ const App: React.FC = () => {
   const weightChecker = (newPages: IPage[]) => {
     let weight = 0;
     let value = true;
-    newPages.map((page, index) => {
+    newPages.forEach((page, index) => {
       if (index === 0) {
         weight = page.weight;
       } else if (page.weight === weight || page.isActive === false) {
@@ -111,7 +93,7 @@ const App: React.FC = () => {
 
   const currentlyShowingPages = () => {
     let showingPages: IPage[] = [];
-    pages.map((page: IPage) => {
+    pages.forEach((page: IPage) => {
       if (page.isActive) {
         showingPages.push(page);
       }
@@ -122,6 +104,7 @@ const App: React.FC = () => {
   const changePage = (history: any, path: string) => {
     fagKaffeReminder(pages, setPages);
     googleMapsWeight(pages, setPages);
+    cantinaWeight(pages, setPages);
     const newPages = currentlyShowingPages();
     let idx = newPages.findIndex(newPages => newPages.path === path);
     if (weightChecker(newPages)) {
@@ -164,12 +147,14 @@ const App: React.FC = () => {
               //<FagKaffe changePage={changePage} seconds={seconds} pageNumber={3} />
               // </Route>
             }
-            {/* <Route exact path="/kantine" component={} /> */}
             <Route exact path="/tegneserie">
               <Comic changePage={changePage} seconds={seconds} pageNumber={4} />
             </Route>
             <Route exact path="/weather">
               <Weather changePage={changePage} seconds={seconds} pageNumber={5} />
+            </Route>
+            <Route exact path="/cantina">
+              <Cantina changePage={changePage} seconds={seconds} pageNumber={6} />
             </Route>
           </Switch>
         </Router>
