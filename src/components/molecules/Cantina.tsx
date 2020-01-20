@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { IPage } from '../../types/Page';
 import { useHistory } from 'react-router';
 import axios from 'axios';
@@ -15,10 +15,20 @@ const MenuEntry = styled.div`
 `;
 
 const Container = styled.div`
+  display: inline-grid;
+  grid-template-columns: 40% auto;
   margin-top: -85px;
   margin-left: 100px;
   animation-delay: .5s;
   animation-duration: 1s;
+`;
+
+const TodaysMeal = styled.div`
+  font-size: 50px;
+`;
+
+const WeeklyMenu = styled.div`
+  font-size: 25px;
 `;
 
 interface ContainerProps {
@@ -55,17 +65,28 @@ const Cantina: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
   }, [seconds, changePage, history]);
 
   return(
-    <Container>
-      {menu && menu.days.map((entry: Day, index: number) => (
-        <MenuEntry key={entry.day} currentDay={index+1 === moment().day()}>
-          <h1>{entry.day}</h1>
-          {entry.dishes.map((dish: any, index: number) => (
+    <Fragment>
+      <Container>
+        <WeeklyMenu>
+          {menu && menu.days.map((entry: Day, index: number) => (
+            <MenuEntry key={entry.day} currentDay={index+1 === moment().day()}>
+              <h1>{entry.day}</h1>
+              {entry.dishes.map((dish: any, index: number) => (
+                <p key={index}>{dish}</p>
+              ))}
+            </MenuEntry>
+            )
+          )}
+        </WeeklyMenu>
+        <TodaysMeal>
+          <h1>Dagens</h1>
+          {menu && menu.days.length <= moment().day()-1 && menu.days[moment().day()-1].dishes.map((dish: any, index: number) => (
             <p key={index}>{dish}</p>
           ))}
-        </MenuEntry>
-        )
-      )}
-    </Container>
+          {menu && menu.days.length > moment().day()-1 && <p>Det e helg!</p>}
+        </TodaysMeal>
+      </Container>
+    </Fragment>
   )
 }
 
