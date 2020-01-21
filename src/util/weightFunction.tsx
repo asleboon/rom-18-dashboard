@@ -2,7 +2,7 @@ import { Page } from '../types/Page';
 import moment from 'moment';
 const Pages: Page[] = [{ pageId: 1, isActive: true, weight: 100 }];
 
-export const Weight = () => { };
+export const Weight = () => {};
 interface IPage {
   path: string;
   weight: number;
@@ -11,7 +11,9 @@ interface IPage {
 
 export const cantinaWeight = (pages: IPage[], setPage: Function) => {
   const format: string = 'hh:mm:ss';
-  const time = moment(), beforeTime = moment('10:00:00', format), afterTime = moment('12:00:00', format);
+  const time = moment(),
+    beforeTime = moment('06:00:00', format),
+    afterTime = moment('18:00:00', format);
 
   if (time.isBetween(beforeTime, afterTime)) {
     const newPage = { path: '/cantina', weight: 1, isActive: true };

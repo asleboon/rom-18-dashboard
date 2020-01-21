@@ -9,6 +9,7 @@ const PublicTransportContainer = styled.div`
   justify-content: center;
   width: 100%;
   animation-delay: 0.5s;
+  margin-top: 100px;
 `;
 
 const RealTimeMap = styled.embed`
