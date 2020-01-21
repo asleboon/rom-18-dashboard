@@ -12,8 +12,8 @@ interface IPage {
 export const cantinaWeight = (pages: IPage[], setPage: Function) => {
   const format: string = 'hh:mm:ss';
   const time = moment(),
-    beforeTime = moment('09:00:00', format),
-    afterTime = moment('12:00:00', format);
+    beforeTime = moment('06:00:00', format),
+    afterTime = moment('18:00:00', format);
 
   if (time.isBetween(beforeTime, afterTime)) {
     const newPage = { path: '/cantina', weight: 1, isActive: true };

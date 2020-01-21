@@ -63,7 +63,7 @@ const Cantina: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
 
   React.useEffect(() => {
     if (seconds === 100) {
-      changePage(history, '/weather');
+      changePage(history, '/cantina');
     }
   }, [seconds, changePage, history]);
 
