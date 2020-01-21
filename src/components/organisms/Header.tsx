@@ -15,7 +15,6 @@ const HeaderContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   background-color: white;
-  margin-bottom: 100px;
   position: relative;
   animation-delay: 0.5s;
 `;

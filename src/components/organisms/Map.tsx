@@ -10,7 +10,8 @@ const MapDiv = styled.div`
   max-width: 100vw;
   display: flex;
   justify-content: center;
-  animation-delay: .5s;
+  animation-delay: 0.5s;
+  margin-top: 100px;
 `;
 const MapCenter = styled.div`
   height: 100%;
@@ -35,7 +36,6 @@ const Map: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
     }
   }, [seconds]);
 
-
   return (
     // Important! Always set the container height explicitly
     <MapDiv className="animated fadeInLeft">
@@ -44,7 +44,7 @@ const Map: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
           options={{
             styles: MapStyles,
             disableDefaultUI: true,
-            backgroundColor: 'white',
+            backgroundColor: 'white'
           }}
           layerTypes={['TrafficLayer']}
           bootstrapURLKeys={{ key: 'AIzaSyBy3SCwdFsIntFwoi-uMjPaPMCtYeRWnFQ' }}
