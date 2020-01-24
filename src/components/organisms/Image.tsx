@@ -66,10 +66,12 @@ const Animal: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
   const fetchImageAndQuote = async () => {
     setLoading(true);
     const perPage = 200;
-    const searchTerm = 'kitten';
-    const randomPage = Math.round(Math.random() * 10);
+    const searchTerm = ['Cat', 'Dog', 'Puppy', 'Kitten'];
+    const randomPage = Math.round(Math.random() * 5);
+    const randomSearch = Math.round(Math.random() * 3);
+    console.log(randomSearch);
     let resImg = await axios.get(
-      `${PIXABAY_BASE_URL}?key=13807530-1be241224f9cb9953219d6a4d&q=${searchTerm}&order=popular&safesearch=true&per_page=${perPage}&pagi=${randomPage}`
+      `${PIXABAY_BASE_URL}?key=13807530-1be241224f9cb9953219d6a4d&q=${searchTerm[randomSearch]}&order=popular&safesearch=true&per_page=${perPage}&pagi=${randomPage}`
     );
     let resQuote = await axios.get(`${QUOTES_API}/quotes/random/lang/en`);
     let idx = Math.round(Math.random() * 199);
