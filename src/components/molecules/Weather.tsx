@@ -5,26 +5,29 @@ import moment from 'moment';
 import { useHistory } from 'react-router';
 import { CircularProgress } from '@material-ui/core';
 import { IPage } from '../../types/Page';
-
+var convert = require('xml-js');
+const WeatherContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
 const ImageContainer = styled.div`
   margin-top: 10%;
-  max-height: 100%;
   max-width: 100%;
   display: flex;
-  flex-direction: Row;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
 `;
 const DailyCotainer = styled.div`
-  height: 200px;
-  width: 200px;
+  height: 300px;
+  width: 300px;
   border: solid;
-  border-color: black;
+  border-color: grey;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: pink;
+  background-color: lightgrey;
 `;
 const CurrentWeatherText = styled.p`
   display: flex;
@@ -92,29 +95,35 @@ const Weather: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
     );
   } else {
     return (
-      <ImageContainer>
-        <DailyCotainer>
-          <CurrentWeatherText>I dag</CurrentWeatherText>
-          <Image src={image} />
-          <CurrentWeatherText>
-            {currentWeather && Math.round(currentWeather.data.main.temp_min)}/
-            {Math.round(currentWeather && currentWeather.data.main.temp_max)}
-          </CurrentWeatherText>
-        </DailyCotainer>
-        {futureWeather &&
-          futureWeather.map((weather: any, index: number) => {
-            return (
-              <DailyCotainer key={index}>
-                <CurrentWeatherText>{getDay(index)}</CurrentWeatherText>
-                <Image src={futureImage && futureImage[index] && futureImage[index]} />
-                <CurrentWeatherText>
-                  {futureWeather[index] && futureWeather[index].main && Math.round(futureWeather[index].main.temp_min)}/
-                  {futureWeather[index] && futureWeather[index].main && Math.round(futureWeather[index].main.temp_max)}
-                </CurrentWeatherText>
-              </DailyCotainer>
-            );
-          })}
-      </ImageContainer>
+      <WeatherContainer>
+        <ImageContainer>
+          <DailyCotainer>
+            <CurrentWeatherText>I dag</CurrentWeatherText>
+            <Image src={image} />
+            <CurrentWeatherText>
+              {currentWeather && Math.round(currentWeather.data.main.temp_min)}°/
+              {Math.round(currentWeather && currentWeather.data.main.temp_max)}°
+            </CurrentWeatherText>
+          </DailyCotainer>
+        </ImageContainer>
+        <ImageContainer>
+          {futureWeather &&
+            futureWeather.map((weather: any, index: number) => {
+              return (
+                <DailyCotainer key={index}>
+                  <CurrentWeatherText>{getDay(index)}</CurrentWeatherText>
+                  <Image src={futureImage && futureImage[index] && futureImage[index]} />
+                  <CurrentWeatherText>
+                    {futureWeather[index] &&
+                      futureWeather[index].main &&
+                      Math.round(futureWeather[index].main.temp_min)}
+                    °
+                  </CurrentWeatherText>
+                </DailyCotainer>
+              );
+            })}
+        </ImageContainer>
+      </WeatherContainer>
     );
   }
 };

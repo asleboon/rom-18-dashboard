@@ -18,7 +18,11 @@ const HeaderContainer = styled.div`
   position: relative;
   animation-delay: 0.5s;
 `;
-
+const Timer = styled.p`
+  position: absolute;
+  padding-bottom: 30px;
+  color: black;
+`;
 const LinkContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -95,6 +99,7 @@ const Header: React.FC<IHeader> = ({ resetTimer, seconds }) => {
   return (
     <HeaderContainer className="animated fadeIn">
       <CountDown>
+        <Timer>{100 - seconds}</Timer>
         <CircularProgress variant="static" value={seconds} color="inherit" />
       </CountDown>
       <ClockContainer>
