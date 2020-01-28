@@ -58,7 +58,8 @@ const Cantina: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
 
   const fetchMenu = async () => {
     let res = await axios.get(MENU_URL);
-    setMenu(res.data);
+
+    if (res.data.days && res.data.days.length > 0) setMenu(res.data);
   };
 
   React.useEffect(() => {
@@ -89,8 +90,8 @@ const Cantina: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
           {menu &&
             menu.days.length >= moment().day() - 1 &&
             menu.days[moment().day() - 1].dishes.map((dish: any, index: number) => (
-              <div>
-                <p key={index}>{dish}</p>
+              <div key={index}>
+                <p>{dish}</p>
               </div>
             ))}
           {menu && menu.days.length >= moment().day() - 1 && menu.days[moment().day() - 1] && (
