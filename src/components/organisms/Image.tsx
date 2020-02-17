@@ -65,32 +65,40 @@ const Animal: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
 
   const fetchImageAndQuote = async () => {
     setLoading(true);
-    const perPage = 200;
+    const perPage = 50;
     const searchTerm = ['Cat', 'Dog', 'Puppy', 'Kitten'];
     const randomPage = Math.round(Math.random() * 5);
     const randomSearch = Math.round(Math.random() * 3);
-    console.log(randomSearch);
     let resImg = await axios.get(
       `${PIXABAY_BASE_URL}?key=13807530-1be241224f9cb9953219d6a4d&q=${searchTerm[randomSearch]}&order=popular&safesearch=true&per_page=${perPage}&pagi=${randomPage}`
     );
-    let resQuote = await axios.get(`${QUOTES_API}/quotes/random/lang/en`);
-    let idx = Math.round(Math.random() * 199);
+    console.log(resImg);
+    // let resQuote = await axios.get(`${QUOTES_API}/quotes/random/lang/en`);
+
+    let idx = Math.round(Math.random() * 49);
     setImage(resImg.data.hits[idx].webformatURL);
-    setQuote(resQuote.data);
     setLoading(false);
+    // if (resQuote) {
+    //   setQuote(resQuote.data);
+    // }
   };
 
   return (
     <Container>
-      {!isLoading && quote && image ? (
+      {!isLoading ? (
         <>
-          <ImageContainer className="animated fadeInLeft">
-            <Image src={image} />
-          </ImageContainer>
-          <QuoteContainer>
-            <Quote>{quote.en}</Quote>
-            <Author>{'- ' + quote.author}</Author>
-          </QuoteContainer>
+          {image && (
+            <ImageContainer className="animated fadeInLeft">
+              <Image src={image} />
+            </ImageContainer>
+          )}
+
+          {quote && (
+            <QuoteContainer>
+              <Quote>{quote.en}</Quote>
+              <Author>{'- ' + quote.author}</Author>
+            </QuoteContainer>
+          )}
         </>
       ) : (
         <CircularProgress color="inherit" />
