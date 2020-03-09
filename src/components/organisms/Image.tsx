@@ -73,14 +73,14 @@ const Animal: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
       `${PIXABAY_BASE_URL}?key=13807530-1be241224f9cb9953219d6a4d&q=${searchTerm[randomSearch]}&order=popular&safesearch=true&per_page=${perPage}&pagi=${randomPage}`
     );
     console.log(resImg);
-    // let resQuote = await axios.get(`${QUOTES_API}/quotes/random/lang/en`);
+    let resQuote = await axios.get(`${QUOTES_API}/quotes/random/lang/en`);
 
     let idx = Math.round(Math.random() * 49);
     setImage(resImg.data.hits[idx].webformatURL);
     setLoading(false);
-    // if (resQuote) {
-    //   setQuote(resQuote.data);
-    // }
+    if (resQuote) {
+      setQuote(resQuote.data);
+    }
   };
 
   return (

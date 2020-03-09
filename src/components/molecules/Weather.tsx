@@ -5,6 +5,7 @@ import moment from 'moment';
 import { useHistory } from 'react-router';
 import { CircularProgress } from '@material-ui/core';
 import { IPage } from '../../types/Page';
+import Snowfall from 'react-snowfall';
 var convert = require('xml-js');
 const WeatherContainer = styled.div`
   display: flex;
@@ -96,6 +97,7 @@ const Weather: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
   } else {
     return (
       <WeatherContainer>
+        {currentWeather && Math.round(currentWeather.data.main.temp_min) < 2 && <Snowfall />}
         <ImageContainer>
           <DailyCotainer>
             <CurrentWeatherText>I dag</CurrentWeatherText>

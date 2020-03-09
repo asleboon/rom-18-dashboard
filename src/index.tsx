@@ -13,6 +13,7 @@ import './index.css';
 import Comic from './components/organisms/ComicStrip';
 import Weather from './components/molecules/Weather';
 import Cantina from './components/molecules/Cantina';
+import Temp from './components/molecules/Temp';
 
 interface IPage {
   path: string;
@@ -33,7 +34,8 @@ const App: React.FC = () => {
     { path: '/trafikk', weight: 1, isActive: true },
     { path: '/tegneserie', weight: 1, isActive: true },
     { path: '/weather', weight: 1, isActive: true },
-    { path: '/cantina', weight: 1, isActive: true }
+    { path: '/cantina', weight: 1, isActive: true },
+    { path: '/temp', weight: 1, isActive: true }
   ]);
 
   useEffect(() => {
@@ -155,6 +157,9 @@ const App: React.FC = () => {
             </Route>
             <Route exact path="/cantina">
               <Cantina changePage={changePage} seconds={seconds} pageNumber={6} />
+            </Route>
+            <Route exact path="/temp">
+              <Temp changePage={changePage} seconds={seconds} pageNumber={7} />
             </Route>
           </Switch>
         </Router>
