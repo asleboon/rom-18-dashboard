@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { IPage } from '../../types/Page';
 import Axios from 'axios';
+import { useHistory } from 'react-router';
 import moment from 'moment';
 import Snowfall from 'react-snowfall';
 
@@ -40,6 +41,7 @@ const Temp: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
   const [temperature, setTemperature] = useState<undefined | TemperatureForAllRooms>(undefined);
   const [lowest, setLowest] = useState<undefined | TemperatureForAllRooms>(undefined);
   const [highest, setHighest] = useState<undefined | TemperatureForAllRooms>(undefined);
+  let history = useHistory();
   const Container = styled.div`
     margin-top: calc(50vh - 300px);
     display: flex;
@@ -66,6 +68,11 @@ const Temp: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
     text-decoration: none;
     margin-left: 20px;
   `;
+  React.useEffect(() => {
+    if (seconds === 100) {
+      changePage(history, '/temp');
+    }
+  }, [seconds]);
   useEffect(() => {
     Axios.get('https://api.thingspeak.com/channels/505282/feeds.json').then(temp => {
       const temps = temp.data.feeds;
