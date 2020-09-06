@@ -78,7 +78,7 @@ const Cantina: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
                 index !== moment().day() - 1 && (
                   <MenuEntry key={entry.day} currentDay={index + 1 === moment().day()}>
                     <h1>{entry.day}</h1>
-                    {entry.dishes.map((dish: any, index: number) => (
+                    {entry.dishes?.map((dish: any, index: number) => (
                       <p key={index}>{dish}</p>
                     ))}
                   </MenuEntry>
@@ -87,17 +87,20 @@ const Cantina: React.FC<IPage> = ({ changePage, seconds, pageNumber }) => {
         </WeeklyMenu>
         <TodaysMeal>
           <h1>Dagens</h1>
+          {console.log(moment().day())}
           {menu &&
             menu.days.length >= moment().day() - 1 &&
-            menu.days[moment().day() - 1].dishes.map((dish: any, index: number) => (
+            moment().day() !== 0 &&
+            menu.days[moment().day() - 1].dishes?.map((dish: any, index: number) => (
               <div key={index}>
                 <p>{dish}</p>
               </div>
             ))}
-          {menu && menu.days.length >= moment().day() - 1 && menu.days[moment().day() - 1] && (
+          {menu && menu.days.length >= moment().day() - 1 && menu.days[moment().day() - 1] && moment().day()!==0 && (
             <img src={menu.days[moment().day() - 1].image} width="80%" />
           )}
           {menu && menu.days.length < moment().day() && <p>Det e helg!</p>}
+          {menu && moment().day()=== 0 && <p>Det e helg!</p>}
         </TodaysMeal>
       </Container>
     </Fragment>
