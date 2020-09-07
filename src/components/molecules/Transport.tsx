@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import { STOP_PLACE_QUERY } from './../../graphql/query';
-import styled from 'styled-components';
-import { IStopPlace, IEstimatedCall } from './../../types/Transport';
-import TransportRow from './TransportRow';
-import moment from 'moment';
+import React, { useEffect } from "react";
+import { useQuery } from "@apollo/react-hooks";
+import { STOP_PLACE_QUERY } from "./../../graphql/query";
+import styled from "styled-components";
+import { IStopPlace, IEstimatedCall } from "./../../types/Transport";
+import TransportRow from "./TransportRow";
+import moment from "moment";
 
 const TransportTableContainer = styled.div`
   display: flex;
@@ -49,8 +49,10 @@ const refineData = (stopPlaces: IStopPlace[]) => {
  */
 const sortDataByDate = (allDepartures: IDeparture[]) => {
   // sort each item by date
-  allDepartures.sort(function (a: IDeparture, b: IDeparture) {
-    const timeCheck = moment(a.expectedArrivalTime).isBefore(moment(b.expectedArrivalTime));
+  allDepartures.sort(function(a: IDeparture, b: IDeparture) {
+    const timeCheck = moment(a.expectedArrivalTime).isBefore(
+      moment(b.expectedArrivalTime)
+    );
     if (!timeCheck) {
       return 1;
     } else {
@@ -70,7 +72,7 @@ const sortByTransportType = (allDepartures: IDeparture[]) => {
   let trains: IDeparture[] = [];
 
   allDepartures.forEach((departure: IDeparture) => {
-    if (departure.serviceJourney.journeyPattern.line.transportMode === 'bus') {
+    if (departure.serviceJourney.journeyPattern.line.transportMode === "bus") {
       buses.push(departure);
     } else {
       trains.push(departure);
@@ -81,8 +83,8 @@ const sortByTransportType = (allDepartures: IDeparture[]) => {
 };
 
 const Transport: React.FC<ITransport> = ({ stopIds }) => {
-  const [busDepartues, setBusDepartures] = React.useState();
-  const [trainDepartures, setTrainDepartures] = React.useState();
+  const [busDepartues, setBusDepartures] = React.useState<IDeparture[]>();
+  const [trainDepartures, setTrainDepartures] = React.useState<IDeparture[]>();
 
   const { loading, error, data } = useQuery(STOP_PLACE_QUERY, {
     variables: { stopIds, n: 3 },
@@ -91,13 +93,13 @@ const Transport: React.FC<ITransport> = ({ stopIds }) => {
 
   useEffect(() => {
     if (data) {
-      const refinedData = refineData(data.stopPlaces)
+      const refinedData = refineData(data.stopPlaces);
       const sortedByDate = sortDataByDate(refinedData);
       const sortedByType = sortByTransportType(sortedByDate);
-      setBusDepartures(sortedByType[0])
-      setTrainDepartures(sortedByType[1])
+      setBusDepartures(sortedByType[0]);
+      setTrainDepartures(sortedByType[1]);
     }
-  }, [data])
+  }, [data]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :/ </p>;
